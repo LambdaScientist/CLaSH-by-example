@@ -20,16 +20,16 @@ data PIn = PIn { _in_1 :: BitVector 4
                } deriving (Eq)
 instance Show PIn where
   show PIn {..} =
-         "PIn\n _in_1 = " P.++ show _in_1
-    P.++ "\n _in_2 = " P.++ show _in_2
-    P.++ "\n _in_3 = " P.++ show _in_3
+         "PIn\n\t _in_1 = " P.++ show _in_1
+    P.++ "\n\t _in_2 = " P.++ show _in_2
+    P.++ "\n\t _in_3 = " P.++ show _in_3
 
 --Outputs and state data
 data St = St { _out_1 :: BitVector 6
              } deriving (Eq)
 instance Show St where
  show St {..} =
-        "St\n _out_1 = " P.++ show _out_1
+        "St\n\t _out_1 = " P.++ show _out_1
 makeLenses ''St
 
 
@@ -70,6 +70,11 @@ topEntity st pin = reg
 data TestResult = TestResult { initConfig  :: Config
                              , endSt        :: St
                              }deriving (Eq)
+instance Show TestResult where
+  show TestResult {..} =
+         "TestResult:\n initConfig = " P.++ show initConfig
+    P.++ "\n Result = " P.++ show endSt
+    P.++ "\n\n"
 data Config = Config { input  :: PIn
                      , startS :: St
                      }deriving (Eq)
@@ -77,11 +82,7 @@ instance Show Config where
  show Config {..} =
         "Config:\n input = " P.++ show input
    P.++ "\n startS = " P.++ show startS
-instance Show TestResult where
- show TestResult {..} =
-        "TestResult:\n initConfig = " P.++ show initConfig
-   P.++ "\n Result = " P.++ show endSt
-   P.++ "\n\n"
+
 
 
 runOneTest :: Config -> Signal TestResult
@@ -91,9 +92,14 @@ runOneTest config = TestResult config <$> result
     startingState = startS config
     inputSignal   = signal $ input config
 
-runAllTests ::  [(TestResult,TestResult,TestResult,TestResult)]
-runAllTests = P.tail.sampleN 2 $ bundle (testOne, testTwo, testThree, testFour)
+runAllTests :: [(TestResult,TestResult,TestResult,TestResult)]
+runAllTests = getTestResults True 2
+
+getTestResults ::  Bool -> Int ->  [(TestResult,TestResult,TestResult,TestResult)]
+getTestResults getTail howManyResults= conTail.sampleN howManyResults  $ bundle (testOne, testTwo, testThree, testFour)
   where
+    conTail x = if getTail then P.tail x else x
+
     startSt    = St 0
 
     inputOne   = PIn 1 1 1
