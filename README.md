@@ -1,18 +1,18 @@
 # CLaSH-by-example
-This project is a collection of examples of CLaSH.
+This project is a collection of CLaSH examples.
 
 Including :
 - A conversion of source code from VHDL BY EXAMPLE by Blaine C. Readler
-- Some modified versions examples on CLaSH's website
+- Some modified version examples on CLaSH's website
   * https://hackage.haskell.org/package/clash-prelude-0.10.14/docs/CLaSH-Prelude-BlockRam.html#usingrams
 
 
 Notes:
-- I use Show to pretty-print some of the records. This is usualy frowned upon. I will evently look into things like pretty-show
-- For clarity purposes I will referer to CLaSH as code that is synthesizable to VHDL and Verilog. Code that is not synthesizable will be called Haskell
-- I am using Proc to define a what happened from a timmer tick. According to WoWWiki -> "Proc is a common term used primarily in game programming to refer to an event triggered under particular circumstances."
-- We use St for stat normaly
-- Usually when I write a type with only one value constructor I label the constructor with the same name as the type. If there is more then one value constructor I will not use the same name.
+- "Show" is used to Pretty-Print some of the records; while this is usually frowned upon, it proved effective. Pretty-Show is planned for future versions.
+- For clarity, CLaSH is synthesizable to VHDL and Verilog. Code that is not synthesizable will be called Haskell.
+- Proc defines timer tick events. According to WoWWiki -> "Proc is a common term used primarily in game programming to refer to an event triggered under particular circumstances."
+- "St" refers to state.
+- Typically a type with only one value constructor is labeled with the same name as the type. If there is more than one value constructor, different names will be used.
 
 
 Helpful links:
