@@ -44,6 +44,20 @@ onTrue st PIn{..} edgeDetect = shouldReset
     shouldClear = if _clear_n then St 0 else enabled
     enabled = if _enable then st{ _out_1 = _in_1 }  else st
 
+ifTrueApplyFun :: Bool -> a -> (a -> a) -> a
+ifTrueApplyFun cond value fun = if cond then fun value
+                                else value
+
+ifTrueReturnFun :: Bool -> (a -> a) -> (a -> a)
+ifTrueReturnFun cond fun = if cond then fun
+                           else id
+
+onTrue' :: St -> PIn -> Bool -> St
+onTrue' st PIn{..} risingEdge = if _reset then St 0
+                                else ifTrueApplyFun risingEdge st $
+                                     if not _clear_n then (\_ -> St 0)
+                                     else ifTrueReturnFun _enable (\newSt -> newSt{ _out_1 = _in_1 })
+
 bnot :: Bit -> Bit
 bnot 1 = 0
 bnot _ = 1
