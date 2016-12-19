@@ -40,21 +40,6 @@ instance Show St where
         "St\n\t _out_1 = " P.++ show _out_1
 
 
--- ifTrueApplyFun :: Bool -> a -> (a -> a) -> a
--- ifTrueApplyFun cond value fun = if cond then fun value
---                        else value
---
--- ifTrueReturnFun :: Bool -> (a -> a) -> (a -> a)
--- ifTrueReturnFun cond fun = if cond then fun
---                   else id
---
--- onTrue' :: St -> PIn -> Bool -> St
--- onTrue' st PIn{..} risingEdge=  if _reset then St 0
---                                else ifTrueApplyFun risingEdge st $
---                                     if not _clear_n then (\_ -> St 0)
---                                     else ifTrueReturnFun _enable (\newSt -> newSt{ _out_1 = _in_1 })
-
-
 onTrue :: St -> PIn -> Bool -> St
 onTrue st PIn{..} edgeDetect = shouldReset
   where
