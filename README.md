@@ -17,7 +17,7 @@ Notes:
 
 Helpful links:
 - CLaSH group - https://groups.google.com/forum/#!forum/clash-language
-- Haskell refence -> http://learnyouahaskell.com/making-our-own-types-and-typeclasses
-- CLaSH refernce -> https://hackage.haskell.org/package/clash-prelude-0.10.14/docs/CLaSH-Tutorial.html
-- Haskell refernce -> http://cheatsheet.codeslower.com/CheatSheet.pdf
-- Lens refernce -> https://github.com/ekmett/lens/wiki/Operators
+- Haskell reference -> http://learnyouahaskell.com/making-our-own-types-and-typeclasses
+- CLaSH reference -> https://hackage.haskell.org/package/clash-prelude-0.10.14/docs/CLaSH-Tutorial.html
+- Haskell reference -> http://cheatsheet.codeslower.com/CheatSheet.pdf
+- Lens reference -> https://github.com/ekmett/lens/wiki/Operators
