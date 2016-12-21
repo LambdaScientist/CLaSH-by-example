@@ -38,10 +38,10 @@ reverseBV :: KnownNat n => BitVector n -> BitVector n
 reverseBV = v2bv . reverse . bv2v
 
 repeat16x :: Vec n a -> Vec (n * 16) a
-repeat16x = concat . (map (replicate d16))
+repeat16x = concat . map (replicate d16)
 
 repeat8x :: KnownNat n => BitVector n -> Vec n (BitVector 8)
-repeat8x x = map v2bv $ (map (replicate d8)) $ bv2v x
+repeat8x x = map v2bv $ map (replicate d8) $ bv2v x
 
 fuzzBV :: KnownNat n => Int -> BitVector n -> BitVector n
 fuzzBV pick bv2Fuzz = P.foldl (\y x ->  replaceBit# y x (invBitI x)) bv2Fuzz indexList
@@ -49,8 +49,8 @@ fuzzBV pick bv2Fuzz = P.foldl (\y x ->  replaceBit# y x (invBitI x)) bv2Fuzz ind
     g = mkStdGen 42 --Add a seed later
     randomNum = P.take pick . P.zip [1..] . randomRs (0,limit) $ g
     limit = size# bv2Fuzz
-    indexList = P.map ( \x -> (snd x) `mod` limit) randomNum
-    invBitI = (\x -> complement $ index# bv2Fuzz x)
+    indexList = P.map (\x -> snd x `mod` limit) randomNum
+    invBitI = complement . index# bv2Fuzz
 
 ---------------------------------------------------------------------------------------------
 ----Constants----------------------------------------------------------------------------------
