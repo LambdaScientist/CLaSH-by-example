@@ -11,7 +11,6 @@ module StandardMux1 where
 import qualified Prelude as P
 import CLaSH.Prelude
 import Control.Lens hiding ((:>))
-import Control.Monad.Trans.State
 
 --inputs
 data PIn = PIn { _in_1 :: BitVector 4
@@ -32,8 +31,7 @@ instance Show St where
         "St\n\t _out_1 = " P.++ show _out_1
 
 procSimple :: St -> PIn -> St
-procSimple st@St{..} PIn{..} = flip execState st $
-  out_1 .= multiPlex _in_3 _in_1 _in_2
+procSimple st@St{..} PIn{..} = st & (out_1 .~ multiPlex _in_3 _in_1 _in_2)
 
 multiPlex :: Bit -> BitVector 4 -> BitVector 4 -> BitVector 4
 multiPlex 1 _ y = y

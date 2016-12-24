@@ -1,9 +1,6 @@
 {-# LANGUAGE DataKinds        #-}
 {-# LANGUAGE FlexibleContexts #-}
-{-# LANGUAGE KindSignatures   #-}
 {-# LANGUAGE MagicHash        #-}
-{-# LANGUAGE RecordWildCards  #-}
-{-# LANGUAGE TemplateHaskell  #-}
 
 -- from http://hackage.haskell.org/package/clash-prelude-0.10.14/docs/CLaSH-Signal-Explicit.html#v:unsafeSynchronizer
 module MultipleClocks where
@@ -40,7 +37,7 @@ oversampling = register' clk2 99 . unsafeSynchronizer clk7 clk2
              . register' clk7 50
 
 overSampleExample :: [Integer]
-overSampleExample = sampleN 37 (oversampling (fromList [1..10]))
+overSampleExample = sampleN 37 $ oversampling $ fromList [1..10]
 -- 99,50,1,1,1,2,2,2,2,3,3,3,4,4,4,4,5,5,5,6,6,6,6,7,7,7,8,8,8,8,9,9,9,10,10,10,10
 
 almostId :: Signal' Clk7 Integer -> Signal' Clk7 Integer
@@ -49,7 +46,7 @@ almostId = register' clk7 70 . unsafeSynchronizer clk2 clk7
          . register' clk7 50
 
 downSampleExample :: [Integer]
-downSampleExample = sampleN 12 (almostId (fromList [1..10]))
+downSampleExample = sampleN 12 $ almostId $ fromList [1..10]
 -- 70,99,1,2,3,4,5,6,7,8,9,10
 
 

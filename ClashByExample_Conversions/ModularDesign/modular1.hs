@@ -17,22 +17,6 @@ import CLaSH.Sized.Internal.BitVector
 
 import qualified StateMachine as SM
 
--- import CLaSH.Signal.Delayed.Explicit
-
-
---inputs
--- data PIn = PIn { _clk   :: Bit
---                , _reset :: Bool
---                , _go    :: Bool
---                , _kill  :: Bool
---                } deriving (Eq)
--- instance Show PIn where
---   show PIn {..} =
---     "PIn\n\t _clk = " P.++ show _clk
---     P.++ "\n\t _reset = " P.++ show _reset
---     P.++ "\n\t _go = " P.++ show _go
---     P.++ "\n\t _kill = " P.++ show _kill
-
 data Partial = PPIn { _go'    :: Bool
                     , _kill'  :: Bool
                     } deriving (Eq)
@@ -57,6 +41,8 @@ instance Show MPIn where
     P.++ "\n\t  _pin2 = " P.++ show _pin2
     P.++ "\n\t  _pin3 = " P.++ show _pin3
 --Outputs and state data
+
+partial2full :: Partial -> Bit -> Bool -> SM.PIn
 partial2full (PPIn go kill) clk reset = SM.PIn clk reset go kill
 
 data StateLabel = Idle | Active | Finish | Abort deriving (Show, Eq)
@@ -82,6 +68,7 @@ instance Show St where
 resetSt :: St -> St
 resetSt (St x y z1 z2 z3  _) = St x y z1 z2 z3 False
 
+partial :: Partial
 partial = PPIn False False
 
 runRegProc :: St -> MPIn -> Bool -> St
@@ -94,22 +81,6 @@ runRegProc st@St{..} MPIn{..} rising = flip execState st $
     kill_1 = _kill' _pin1
     kill_2 = _kill' _pin2
     kill_3 = _kill' _pin3
---
---
--- runSt :: St -> PIn -> Bool -> St
--- runSt st@St{..} PIn{..} risingEdge = flip execState st $ do
---   if _reset then put $ resetSt st
---   else
---     case _state_reg of
---       Idle   -> when _go $ state_reg .= Active
---       Active -> if _kill then state_reg .= Abort else when (_count == 64)  $ state_reg .= Finish
---       Finish -> state_reg .= Idle
---       Abort  -> unless _kill $ state_reg .= Idle
---       _  -> state_reg .= Idle
---   when risingEdge $ do
---     if _state_reg == Finish || _state_reg == Abort then count .= 0
---                                                    else when (_state_reg == Active) $ count += 1
---     if _state_reg == Finish then done .= True else done .= False
 
 setStDone:: St -> Bool -> Bool -> Bool -> St
 setStDone st d1 d2 d3 = st {_done1 = d1, _done2 = d2, _done3 = d3}

@@ -64,7 +64,7 @@ onRun st@St{..} PIn{..} risingEdge = flip execState st $ do
         Active -> do count += 1
                      done .= False
                      if _kill then state_reg .= Abort
-                     else when (_count == 64)  $ state_reg .= Finish
+                     else when _count == 64  $ state_reg .= Finish
         Finish -> do count .= 0
                      done .= True
                      state_reg .= Idle

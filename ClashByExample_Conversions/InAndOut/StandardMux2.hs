@@ -11,7 +11,6 @@ module StandardMux1 where
 import qualified Prelude as P
 import CLaSH.Prelude
 import Control.Lens hiding ((:>))
-import Control.Monad.Trans.State
 
 --inputs
 data PIn = PIn { _in_1 :: BitVector 4
@@ -31,9 +30,11 @@ instance Show St where
  show St {..} =
         "St\n\t _out_1 = " P.++ show _out_1
 
+-- procSimple :: St -> PIn -> St
+-- procSimple st@St{..} PIn{..} = flip execState st $
+--   out_1 .= if bit2Bool _in_3 then _in_2 else _in_1
 procSimple :: St -> PIn -> St
-procSimple st@St{..} PIn{..} = flip execState st $
-  out_1 .= if bit2Bool _in_3 then _in_2 else _in_1
+procSimple st@St{..} PIn{..} = st & (out_1 .~ if bit2Bool _in_3 then _in_2 else _in_1)
 
 bit2Bool :: Bit -> Bool
 bit2Bool 1 = True
@@ -42,7 +43,7 @@ bit2Bool _ = False
 topEntity :: St -> Signal PIn -> Signal St
 topEntity st pin = reg
   where
-    reg = register st (procSimple <$> reg <*> pin)
+    reg = register st $ procSimple <$> reg <*> pin
 
 
 ---TESTING
@@ -84,14 +85,14 @@ getTestResults getTail howManyResults= conTail.sampleN howManyResults  $ bundle 
     configOne  = Config inputOne startSt
     testOne    = runOneTest configOne
 
-    inputTwo    = PIn 1 1 0
+    inputTwo   = PIn 1 1 0
     configTwo  = Config inputTwo startSt
     testTwo    = runOneTest configTwo
 
-    inputThree = PIn 1 0 1
-    configThree  = Config inputThree startSt
-    testThree  = runOneTest configThree
+    inputThree  = PIn 1 0 1
+    configThree = Config inputThree startSt
+    testThree   = runOneTest configThree
 
     inputFour  = PIn 0 1 1
-    configFour  = Config inputFour startSt
+    configFour = Config inputFour startSt
     testFour   = runOneTest configFour

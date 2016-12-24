@@ -36,11 +36,9 @@ procSimple st@St{..} PIn{..} = flip execState st $
   where
     keepValue keepDecider =  v2bv.map (.&. keepDecider).bv2v
 
-
 bnot :: Bit -> Bit
 bnot 1 = 0
 bnot _ = 1
-
 
 bit2Bool :: Bit -> Bool
 bit2Bool 1 = True
@@ -50,7 +48,6 @@ topEntity :: St -> Signal PIn -> Signal St
 topEntity st pin = reg
   where
     reg = register st (procSimple <$> reg <*> pin)
-
 
 ---TESTING
 data TestResult = TestResult { initConfig  :: Config
@@ -68,8 +65,6 @@ instance Show Config where
  show Config {..} =
         "Config:\n input = " P.++ show input
    P.++ "\n startS = " P.++ show startS
-
-
 
 runOneTest :: Config -> Signal TestResult
 runOneTest config = TestResult config <$> result

@@ -14,8 +14,6 @@ import Control.Lens hiding ((:>))
 import Control.Monad.Trans.State
 import Control.Monad
 
--- import CLaSH.Signal.Delayed.Explicit
-
 
 --inputs
 data PIn = PIn { _clk   :: Bit
@@ -44,8 +42,6 @@ instance Show St where
         "St\n\t _state_reg = " P.++ show _state_reg
    P.++ "\n\t _count = " P.++ show _count
    P.++ "\n\t _done = " P.++ show _done
-
-
 
 
 reset :: St

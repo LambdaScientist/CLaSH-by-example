@@ -20,7 +20,7 @@ data PIn = PIn { _in_1 :: Bit
                } deriving ( Eq)
 instance Show PIn where
   show PIn {..} =
-    "PIn\n\t _in_1 = " P.++ show _in_1
+      "PIn\n\t _in_1 = " P.++ show _in_1
     P.++ "\n\t _in_2 = " P.++ show _in_2
     P.++ "\n\t _in_3 = " P.++ show _in_3
 --Outputs and state data
@@ -46,8 +46,6 @@ topEntity st pin = reg
 
 
 
-
-
 ---TESTING
 
 data TestResult = TestResult { initConfig  :: Config
@@ -65,8 +63,6 @@ instance Show Config where
  show Config {..} =
         "Config:\n input = " P.++ show input
    P.++ "\n startS = " P.++ show startS
-
-
 
 
 runOneTest :: Config -> Signal TestResult

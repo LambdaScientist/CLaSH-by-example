@@ -14,9 +14,6 @@ import Control.Lens hiding ((:>))
 import Control.Monad.Trans.State
 import Control.Monad
 
--- import CLaSH.Signal.Delayed.Explicit
-
-
 --inputs
 data PIn = PIn { _clk   :: Bit
                , _reset :: Bool
@@ -45,12 +42,8 @@ instance Show St where
    P.++ "\n\t _count = " P.++ show _count
    P.++ "\n\t _done = " P.++ show _done
 
-
-
-
 reset :: St
 reset = St Idle 0 False
-
 
 onRun :: St -> PIn -> Bool -> St
 onRun st@St{..} PIn{..} risingEdge = flip execState st $ do

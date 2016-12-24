@@ -1,4 +1,6 @@
 {-# LANGUAGE RecordWildCards #-}
+{-# LANGUAGE DataKinds #-}
+
 module CPU where
 
 import CLaSH.Prelude
@@ -19,14 +21,13 @@ data Instruction
   | Store Reg MemAddr
   | Nop
   deriving (Eq,Show)
-data Reg
-  = Zero
-  | PC
-  | RegA
-  | RegB
-  | RegC
-  | RegD
-  | RegE
+data Reg = Zero
+         | PC
+         | RegA
+         | RegB
+         | RegC
+         | RegD
+         | RegE
   deriving (Eq,Show,Enum)
 data Operator = Add | Sub | Incr | Imm | CmpGt
   deriving (Eq,Show)
@@ -40,8 +41,8 @@ data MachCode
   , rdAddr  :: MemAddr
   , wrAddr  :: MemAddr
   , wrEn    :: Bool
-  , jmpM    :: Maybe Value
-  }
+  , jmpM    :: Maybe Value }
+
 nullCode = MachCode { inputX = Zero, inputY = Zero, result = Zero, aluCode = Imm
                     , ldReg = Zero, wrAddr = 0, rdAddr = 0, wrEn = False
                     , jmpM = Nothing

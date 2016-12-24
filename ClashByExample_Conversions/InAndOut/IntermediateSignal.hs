@@ -44,10 +44,10 @@ procSimple st@St{..} PIn{..} = flip execState st $ do
 topEntity :: St -> Signal PIn -> Signal St
 topEntity st pin = reg
   where
-    reg = register st (procSimple <$> reg <*> pin)
+    reg = register st $ procSimple <$> reg <*> pin
 
 
-    ---TESTING
+---TESTING
 data TestResult = TestResult { initConfig  :: Config
                              , endSt        :: St
                              }deriving (Eq)
@@ -63,7 +63,6 @@ instance Show Config where
  show Config {..} =
         "Config:\n input = " P.++ show input
    P.++ "\n startS = " P.++ show startS
-
 
 
 runOneTest :: Config -> Signal TestResult
