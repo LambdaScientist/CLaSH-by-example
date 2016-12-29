@@ -14,6 +14,7 @@ import Control.Lens hiding ((:>))
 import Control.Monad.Trans.State
 import Control.Monad
 
+
 --inputs
 data PIn = PIn { _clk   :: Bit
                , _reset :: Bool
@@ -42,8 +43,10 @@ instance Show St where
    P.++ "\n\t _count = " P.++ show _count
    P.++ "\n\t _done = " P.++ show _done
 
+
 reset :: St
 reset = St Idle 0 False
+
 
 onRun :: St -> PIn -> Bool -> St
 onRun st@St{..} PIn{..} risingEdge = flip execState st $ do
@@ -97,28 +100,37 @@ runOneTest config = TestResult config <$> result
     startingState = startS config
     inputSignal   = signal $ input config
 
-runAllTests :: [(TestResult,TestResult,TestResult,TestResult)]
-runAllTests = getTestResults True 2
 
-getTestResults ::  Bool -> Int ->  [(TestResult,TestResult,TestResult,TestResult)]
-getTestResults getTail howManyResults= conTail.sampleN howManyResults  $ bundle (testOne, testTwo, testThree, testFour)
+configList :: [Config]
+configList = [configOne, configTwo, configThree, configFour]
   where
-    conTail x = if getTail then P.tail x else x
+    startSt = St Idle 0 False
 
-    startSt    = St Idle 0 False
+    inputOne  = PIn 1 False False False
+    configOne = Config inputOne startSt
 
-    inputOne   = PIn 1 False False False
-    configOne  = Config inputOne startSt
-    testOne    = runOneTest configOne
+    inputTwo  = PIn 1 False False False
+    configTwo = Config inputTwo startSt
 
-    inputTwo    = PIn 1 False False False
-    configTwo  = Config inputTwo startSt
-    testTwo    = runOneTest configTwo
-
-    inputThree = PIn 1 False False False
-    configThree  = Config inputThree startSt
-    testThree  = runOneTest configThree
+    inputThree  = PIn 1 False False False
+    configThree = Config inputThree startSt
 
     inputFour  = PIn 1 False False False
-    configFour  = Config inputFour startSt
-    testFour   = runOneTest configFour
+    configFour = Config inputFour startSt
+
+getTestResult ::  Bool -> Int -> Config ->  [TestResult]
+getTestResult getTail howManyResults config = conTail $ sampleN howManyResults test
+  where
+    conTail x = if getTail then P.tail x else x
+    test      = runOneTest config
+
+runConfigList :: [Config] -> [[TestResult]]
+runConfigList = runConfigList' True 2
+
+runConfigList' :: Bool -> Int -> [Config] -> [[TestResult]]
+runConfigList' getTail howMany = P.map test
+  where
+    test = getTestResult getTail howMany
+
+defaultTest :: [[TestResult]]
+defaultTest = runConfigList configList

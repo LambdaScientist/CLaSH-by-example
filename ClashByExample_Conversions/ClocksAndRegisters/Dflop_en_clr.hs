@@ -36,14 +36,6 @@ instance Show St where
         "St\n\t _out_1 = " P.++ show _out_1
 
 
--- onTrue :: St -> PIn -> Bool -> St
--- onTrue st PIn{..} edgeDetect = shouldReset
---   where
---     shouldReset = if _reset then St 0 else risingEdge
---     risingEdge = if edgeDetect then shouldClear else st
---     shouldClear = if _clear_n then St 0 else enabled
---     enabled = if _enable then st{ _out_1 = _in_1 }  else st
-
 onTrue :: St -> PIn -> Bool -> St
 onTrue st PIn{..} rEdge = ifReset
   where
@@ -56,20 +48,7 @@ onTrue st PIn{..} rEdge = ifReset
                 else ifEnabled
     ifEnabled = if _enable then st{ _out_1 = _in_1 }
                 else st
---
--- ifTrueApplyFun :: Bool -> a -> (a -> a) -> a
--- ifTrueApplyFun cond value fun = if cond then fun value
---                                 else value
---
--- ifTrueReturnFun :: Bool -> (a -> a) -> (a -> a)
--- ifTrueReturnFun cond fun = if cond then fun
---                            else id
---
--- onTrue' :: St -> PIn -> Bool -> St
--- onTrue' st PIn{..} risingEdge = if _reset then St 0
---                                 else ifTrueApplyFun risingEdge st $
---                                      if not _clear_n then (\_ -> St 0)
---                                      else ifTrueReturnFun _enable (\newSt -> newSt{ _out_1 = _in_1 })
+
 
 bnot :: Bit -> Bit
 bnot 1 = 0
@@ -124,28 +103,36 @@ runOneTest config = TestResult config <$> result
     startingState = startS config
     inputSignal   = signal $ input config
 
-runAllTests :: [(TestResult,TestResult,TestResult,TestResult)]
-runAllTests = getTestResults True 2
-
-getTestResults ::  Bool -> Int ->  [(TestResult,TestResult,TestResult,TestResult)]
-getTestResults getTail howManyResults= conTail.sampleN howManyResults  $ bundle (testOne, testTwo, testThree, testFour)
+configList :: [Config]
+configList = [configOne, configTwo, configThree, configFour]
   where
-    conTail x = if getTail then P.tail x else x
-
     startSt    = St 0
 
     inputOne  = PIn 0 0 False False False
     configOne = Config inputOne startSt
-    testOne   = runOneTest configOne
 
     inputTwo  = PIn 0 0 False False False
     configTwo = Config inputTwo startSt
-    testTwo   = runOneTest configTwo
 
     inputThree  = PIn 0 0 False False False
     configThree = Config inputThree startSt
-    testThree   = runOneTest configThree
 
     inputFour  = PIn 0 0 False False False
     configFour = Config inputFour startSt
-    testFour   = runOneTest configFour
+
+getTestResult ::  Bool -> Int -> Config ->  [TestResult]
+getTestResult getTail howManyResults config = conTail $ sampleN howManyResults test
+  where
+    conTail x = if getTail then P.tail x else x
+    test      = runOneTest config
+
+runConfigList :: [Config] -> [[TestResult]]
+runConfigList = runConfigList' True 2
+
+runConfigList' :: Bool -> Int -> [Config] -> [[TestResult]]
+runConfigList' getTail howMany = P.map test
+  where
+    test = getTestResult getTail howMany
+
+defaultTest :: [[TestResult]]
+defaultTest = runConfigList configList

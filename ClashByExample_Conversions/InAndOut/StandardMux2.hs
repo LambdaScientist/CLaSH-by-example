@@ -71,28 +71,36 @@ runOneTest config = TestResult config <$> result
     startingState = startS config
     inputSignal   = signal $ input config
 
-runAllTests :: [(TestResult,TestResult,TestResult,TestResult)]
-runAllTests = getTestResults True 2
-
-getTestResults ::  Bool -> Int ->  [(TestResult,TestResult,TestResult,TestResult)]
-getTestResults getTail howManyResults= conTail.sampleN howManyResults  $ bundle (testOne, testTwo, testThree, testFour)
+configList :: [Config]
+configList = [configOne, configTwo, configThree, configFour]
   where
-    conTail x = if getTail then P.tail x else x
-
     startSt    = St 0
 
     inputOne   = PIn 1 1 1
     configOne  = Config inputOne startSt
-    testOne    = runOneTest configOne
 
-    inputTwo   = PIn 1 1 0
+    inputTwo    = PIn 1 1 0
     configTwo  = Config inputTwo startSt
-    testTwo    = runOneTest configTwo
 
-    inputThree  = PIn 1 0 1
-    configThree = Config inputThree startSt
-    testThree   = runOneTest configThree
+    inputThree = PIn 1 0 1
+    configThree  = Config inputThree startSt
 
     inputFour  = PIn 0 1 1
-    configFour = Config inputFour startSt
-    testFour   = runOneTest configFour
+    configFour  = Config inputFour startSt
+
+getTestResult ::  Bool -> Int -> Config ->  [TestResult]
+getTestResult getTail howManyResults config = conTail $ sampleN howManyResults test
+  where
+    conTail x = if getTail then P.tail x else x
+    test      = runOneTest config
+
+runConfigList :: [Config] -> [[TestResult]]
+runConfigList = runConfigList' True 2
+
+runConfigList' :: Bool -> Int -> [Config] -> [[TestResult]]
+runConfigList' getTail howMany = P.map test
+  where
+    test = getTestResult getTail howMany
+
+defaultTest :: [[TestResult]]
+defaultTest = runConfigList configList

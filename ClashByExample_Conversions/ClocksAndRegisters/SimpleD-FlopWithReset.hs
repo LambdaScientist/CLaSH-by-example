@@ -52,16 +52,7 @@ topEntity st pin = result
     clk = _clk <$> pin
 
 
---
 ---TESTING
-
-runTop :: Signal St
-runTop = topEntity (St 0 ) input
-  where
-    input = PIn  <$> (bnot <$> oscillate) <*> oscillate -- <*>
-    oscillate = register 1 (bnot <$> oscillate)
-    ---TESTING
-
 data TestResult = TestResult { initConfig  :: Config
                              , endSt        :: St
                              }deriving (Eq)
@@ -85,28 +76,36 @@ runOneTest config = TestResult config <$> result
     startingState = startS config
     inputSignal   = signal $ input config
 
-runAllTests :: [(TestResult,TestResult,TestResult,TestResult)]
-runAllTests = getTestResults True 2
-
-getTestResults ::  Bool -> Int ->  [(TestResult,TestResult,TestResult,TestResult)]
-getTestResults getTail howManyResults= conTail.sampleN howManyResults  $ bundle (testOne, testTwo, testThree, testFour)
+configList :: [Config]
+configList = [configOne, configTwo, configThree, configFour]
   where
-    conTail x = if getTail then P.tail x else x
-
     startSt    = St 0
 
     inputOne  = PIn 0 0 False
     configOne = Config inputOne startSt
-    testOne   = runOneTest configOne
 
     inputTwo  = PIn 0 0 False
     configTwo = Config inputTwo startSt
-    testTwo   = runOneTest configTwo
 
     inputThree  = PIn 0 0 False
     configThree = Config inputThree startSt
-    testThree   = runOneTest configThree
 
     inputFour  = PIn 0 0 False
     configFour = Config inputFour startSt
-    testFour   = runOneTest configFour
+
+getTestResult ::  Bool -> Int -> Config ->  [TestResult]
+getTestResult getTail howManyResults config = conTail $ sampleN howManyResults test
+  where
+    conTail x = if getTail then P.tail x else x
+    test      = runOneTest config
+
+runConfigList :: [Config] -> [[TestResult]]
+runConfigList = runConfigList' True 2
+
+runConfigList' :: Bool -> Int -> [Config] -> [[TestResult]]
+runConfigList' getTail howMany = P.map test
+  where
+    test = getTestResult getTail howMany
+
+defaultTest :: [[TestResult]]
+defaultTest = runConfigList configList
