@@ -18,8 +18,8 @@ import Control.Monad
 --inputs
 data PIn = PIn { _clk   :: Bit
                , _reset :: Bool
-               , _start  :: Bool
-               , _stop   :: Bool
+               , _start :: Bool
+               , _stop  :: Bool
                } deriving (Eq)
 instance Show PIn where
   show PIn {..} =
