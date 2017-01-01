@@ -4,6 +4,7 @@
 {-# LANGUAGE MagicHash        #-}
 {-# LANGUAGE RecordWildCards  #-}
 {-# LANGUAGE TemplateHaskell  #-}
+{-# LANGUAGE RankNTypes  #-}
 
 
 module Clks_n_regs_4 where
@@ -23,12 +24,15 @@ data PIn = PIn { _clk   :: Bit
                , _start :: Bool
                , _stop  :: Bool
                } deriving (Eq)
+instance PortIn PIn
 instance Show PIn where
   show PIn {..} =
     "PIn\n\t _clk = " P.++ show _clk
     P.++ "\n\t _reset = " P.++ show _reset
     P.++ "\n\t _start = " P.++ show _start
     P.++ "\n\t _stop = " P.++ show _stop
+
+
 --Outputs and state data
 data St = St { _cnt_en   :: Bool
              , _count_us :: BitVector 4
@@ -37,6 +41,7 @@ data St = St { _cnt_en   :: Bool
              , _count    :: BitVector 4
              } deriving (Eq)
 makeLenses ''St
+instance SysState St
 instance Show St where
  show St {..} =
         "St\n\t _cnt_en = " P.++ show _cnt_en
@@ -68,46 +73,54 @@ bnot :: Bit -> Bit
 bnot 1 = 0
 bnot _ = 1
 
-topEntity :: Signal PIn -> Signal St
-topEntity = topEntity' st
-  where
-    st = St False 0 False False 0
+-- topEntity :: Signal PIn -> Signal St
+-- topEntity = topEntity' st
+--   where
+--     st = St False 0 False False 0
 
-topEntity' :: St -> Signal PIn -> Signal St
+topEntity' :: SysStateShow st -> Signal (PortInShow pin) -> Signal (SysStateShow st)--Signal st
 topEntity' st pin = result
   where
-    result = register st (onTrue <$> result <*> pin <*> rising )
-    rising = isRising 0 clk
-    clk = _clk <$> pin
+    result = register st result --(onTrue <$> result <*> pin <*> rising )
+    -- rising = isRising 0 clk
+    -- clk = _clk <$> pin
+-- topEntity' :: St -> Signal PIn -> Signal St
+-- topEntity' st pin = result
+--   where
+--     result = register st (onTrue <$> result <*> pin <*> rising )
+--     rising = isRising 0 clk
+--     clk = _clk <$> pin
 
 
 ---TESTING
 
-data TestResult = TestResult { initConfig  :: Config
-                             , endSt        :: St
-                             }deriving (Eq)
-instance Show TestResult where
-  show TestResult {..} =
-         "TestResult:\n initConfig = " P.++ show initConfig
-    P.++ "\n Result = " P.++ show endSt
-    P.++ "\n\n"
-data Config = Config { input  :: PIn
-                     , startS :: St
-                     }deriving (Eq)
-instance Show Config where
- show Config {..} =
-        "Config:\n input = " P.++ show input
-   P.++ "\n startS = " P.++ show startS
+data Config pin st = Config { input'  :: PortInShow pin
+                            , startSt' :: SysStateShow st
+                            }
+
+instance Show (Config pin st) where
+ show (Config pin st) =
+        "Config:\n input = " P.++ show pin
+   P.++ "\n startSt = " P.++ show st
+
+-- instance Configuration Config where
+--   input = input'
+--   startSt = startSt'
+
+instance (PortIn pin, SysState st) => Configuration (Config pin st) where
+  input (Config pin _) = input'
+  startSt (Config _ st) = st
+
+instance Transition (Config pin st) where
+  runOneTest = runOneTest'
 
 
-
-
-configList :: [Config]
+configList :: [Config pin st]
 configList = [configOne, configTwo, configThree, configFour]
   where
     startSt    = St False 0 False False 0
 
-    inputOne  = PIn 0 False False False
+    inputOne = PIn 0 False False False
     configOne = Config inputOne startSt
 
     inputTwo  = PIn 0 False False False
