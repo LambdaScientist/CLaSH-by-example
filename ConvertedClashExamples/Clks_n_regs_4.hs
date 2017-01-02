@@ -17,6 +17,7 @@ import Control.Monad.Trans.State
 import Control.Monad
 
 import TestingTools
+import CommonClash
 
 
 --inputs
@@ -51,10 +52,6 @@ onTrue st@St{..} PIn{..} risingEdge = flip execState st $
                     else count_us += 1
       stop_d1 .= _stop
       stop_d2 .= _stop_d1
-
-bnot :: Bit -> Bit
-bnot 1 = 0
-bnot _ = 1
 
 topEntity :: Signal PIn -> Signal St
 topEntity = topEntity' st

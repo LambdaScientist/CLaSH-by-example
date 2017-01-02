@@ -13,6 +13,7 @@ import CLaSH.Prelude
 import Control.Lens hiding ((:>))
 
 import TestingTools
+import CommonClash
 
 --inputs
 data PIn = PIn { _in_1 :: Bit
@@ -24,10 +25,6 @@ makeLenses ''St
 
 onTrue :: St -> PIn -> Bool -> St
 onTrue st PIn{..} condition = if condition then st{ _out_1 = _in_1 } else st
-
-bnot :: Bit -> Bit
-bnot 1 = 0
-bnot _ = 1
 
 topEntity :: Signal PIn -> Signal St
 topEntity = topEntity' startSt
