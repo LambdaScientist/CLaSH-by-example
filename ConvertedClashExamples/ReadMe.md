@@ -1,4 +1,6 @@
 Notes:
-- Refactor to be better
-- Move config back to TestProc?
-  - ad deriving (Eq) to config
+- Refactor TestingTools types to be more readable
+- Clean up importing system
+- Add folder structure
+- Convert remaining files
+  - While doing this move common clash functions to the CommonClash library

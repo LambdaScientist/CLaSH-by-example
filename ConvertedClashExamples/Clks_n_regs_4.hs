@@ -7,7 +7,6 @@
 {-# LANGUAGE RankNTypes  #-}
 {-# LANGUAGE ScopedTypeVariables  #-}
 
-
 module Clks_n_regs_4 where
 
 import qualified Prelude as P
@@ -18,7 +17,6 @@ import Control.Monad
 
 import TestingTools
 import CommonClash
-
 
 --inputs
 data PIn = PIn { _clk   :: Bit

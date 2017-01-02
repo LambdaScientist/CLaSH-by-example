@@ -110,7 +110,11 @@ setupTest (Config pin st) = topEntity' st sPin
 setupAndRun :: [[TestResult]]
 setupAndRun = runConfigList setupTest configurationList
 
+--Probably no copy pasta here
+instance Show PIn where
+instance Show St where
 configurationList :: [Config]
+
 -}
 
 

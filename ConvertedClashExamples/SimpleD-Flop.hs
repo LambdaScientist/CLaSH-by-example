@@ -5,7 +5,6 @@
 {-# LANGUAGE RecordWildCards  #-}
 {-# LANGUAGE TemplateHaskell  #-}
 
-
 module SimpleDFlop where
 
 import qualified Prelude as P
@@ -37,7 +36,6 @@ topEntity' st pin = result
     result = register st (onTrue <$> result <*> pin <*> rising )
     rising = isRising 0 clk
     clk = _clk <$> pin
-
 
 ---TESTING
 instance PortIn PIn
