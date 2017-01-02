@@ -18,16 +18,9 @@ import TestingTools
 data PIn = PIn { _in_1 :: Bit
                , _clk  :: Bit
                } deriving (Eq)
-instance Show PIn where
-  show PIn {..} =
-    "PIn\n\t _in_1 = " P.++ show _in_1
-    P.++ "\n\t _clk = " P.++ show _clk
 data St = St { _out_1 :: Bit
              } deriving (Eq)
 makeLenses ''St
-instance Show St where
- show St {..} =
-        "St\n\t _out_1 = " P.++ show _out_1
 
 onTrue :: St -> PIn -> Bool -> St
 onTrue st PIn{..} condition = if condition then st{ _out_1 = _in_1 } else st
@@ -69,6 +62,15 @@ setupTest (Config pin st) = topEntity' st sPin
 
 setupAndRun :: [[TestResult]]
 setupAndRun = runConfigList setupTest configurationList
+
+instance Show PIn where
+  show PIn {..} =
+    "PIn\n\t _in_1 = " P.++ show _in_1
+    P.++ "\n\t _clk = " P.++ show _clk
+
+instance Show St where
+ show St {..} =
+        "St\n\t _out_1 = " P.++ show _out_1
 
 configurationList :: [Config]
 configurationList = [configOne, configTwo, configThree, configFour]

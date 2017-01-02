@@ -25,13 +25,6 @@ data PIn = PIn { _clk   :: Bit
                , _start :: Bool
                , _stop  :: Bool
                } deriving (Eq)
-instance Show PIn where
-  show PIn {..} =
-    "PIn\n\t _clk = " P.++ show _clk
-    P.++ "\n\t _reset = " P.++ show _reset
-    P.++ "\n\t _start = " P.++ show _start
-    P.++ "\n\t _stop = " P.++ show _stop
-
 
 --Outputs and state data
 data St = St { _cnt_en   :: Bool
@@ -41,18 +34,9 @@ data St = St { _cnt_en   :: Bool
              , _count    :: BitVector 4
              } deriving (Eq)
 makeLenses ''St
-instance Show St where
- show St {..} =
-        "St\n\t _cnt_en = " P.++ show _cnt_en
-   P.++ "\n\t _count_us = " P.++ show _count_us
-   P.++ "\n\t _stop_d1 = " P.++ show _stop_d1
-   P.++ "\n\t _stop_d2 = " P.++ show _stop_d2
-   P.++ "\n\t _count = " P.++ show _count
-
 
 resetSTKeepCount :: BitVector 4 -> St
 resetSTKeepCount = St False 0 False False
-
 
 onTrue :: St -> PIn -> Bool -> St
 onTrue st@St{..} PIn{..} risingEdge = flip execState st $
@@ -84,7 +68,6 @@ topEntity' st pin = result
     rising = isRising 0 clk
     clk = _clk <$> pin
 
-
 ---TESTING
 instance PortIn PIn
 instance SysState St
@@ -105,6 +88,21 @@ setupTest (Config pin st) = topEntity' st sPin
 
 setupAndRun :: [[TestResult]]
 setupAndRun = runConfigList setupTest configurationList
+
+instance Show PIn where
+  show PIn {..} =
+    "PIn\n\t _clk = " P.++ show _clk
+    P.++ "\n\t _reset = " P.++ show _reset
+    P.++ "\n\t _start = " P.++ show _start
+    P.++ "\n\t _stop = " P.++ show _stop
+
+instance Show St where
+ show St {..} =
+        "St\n\t _cnt_en = " P.++ show _cnt_en
+   P.++ "\n\t _count_us = " P.++ show _count_us
+   P.++ "\n\t _stop_d1 = " P.++ show _stop_d1
+   P.++ "\n\t _stop_d2 = " P.++ show _stop_d2
+   P.++ "\n\t _count = " P.++ show _count
 
 configurationList :: [Config]
 configurationList = [configOne, configTwo, configThree, configFour]
