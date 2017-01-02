@@ -11,11 +11,8 @@ module SimpleDFlop where
 import qualified Prelude as P
 import CLaSH.Prelude
 import Control.Lens hiding ((:>))
-import Control.Monad.Trans.State
-import CLaSH.Sized.Internal.BitVector
 
-import CLaSH.Signal.Delayed.Explicit
-
+import TestingTools
 
 --inputs
 data PIn = PIn { _in_1 :: Bit
@@ -32,7 +29,6 @@ instance Show St where
  show St {..} =
         "St\n\t _out_1 = " P.++ show _out_1
 
-
 onTrue :: St -> PIn -> Bool -> St
 onTrue st PIn{..} condition = if condition then st{ _out_1 = _in_1 } else st
 
@@ -40,9 +36,13 @@ bnot :: Bit -> Bit
 bnot 1 = 0
 bnot _ = 1
 
+topEntity :: Signal PIn -> Signal St
+topEntity = topEntity' startSt
+  where
+    startSt = St 0
 
-topEntity :: St -> Signal PIn -> Signal St
-topEntity st pin = result
+topEntity' :: St -> Signal PIn -> Signal St
+topEntity' st pin = result
   where
     result = register st (onTrue <$> result <*> pin <*> rising )
     rising = isRising 0 clk
@@ -50,40 +50,28 @@ topEntity st pin = result
 
 
 ---TESTING
+instance PortIn PIn
+instance SysState St
 
-runTop :: Signal St
-runTop = topEntity (St 0 ) input
-  where
-    input = PIn  <$> (bnot <$> oscillate) <*> oscillate -- <*>
-    oscillate = register 1 (bnot <$> oscillate)
-    ---TESTING
-
-data TestResult = TestResult { initConfig  :: Config
-                             , endSt        :: St
-                             }deriving (Eq)
-instance Show TestResult where
-  show TestResult {..} =
-         "TestResult:\n initConfig = " P.++ show initConfig
-    P.++ "\n Result = " P.++ show endSt
-    P.++ "\n\n"
-data Config = Config { input  :: PIn
-                     , startS :: St
-                     }deriving (Eq)
+data Config = Config { input'  :: PIn
+                     , startSt' :: St
+                     }
 instance Show Config where
- show Config {..} =
-        "Config:\n input = " P.++ show input
-   P.++ "\n startS = " P.++ show startS
+  show Config{..} = "Config:\n input = " P.++ show input'
+               P.++ "\n startSt = " P.++ show startSt'
+instance Transition Config where
+  runOneTest = runOneTest'
 
-runOneTest :: Config -> Signal TestResult
-runOneTest config = TestResult config <$> result
+setupTest :: Config -> Signal St
+setupTest (Config pin st) = topEntity' st sPin
   where
-    result = topEntity startingState inputSignal
-    startingState = startS config
-    inputSignal   = signal $ input config
+    sPin = signal pin
 
+setupAndRun :: [[TestResult]]
+setupAndRun = runConfigList setupTest configurationList
 
-configList :: [Config]
-configList = [configOne, configTwo, configThree, configFour]
+configurationList :: [Config]
+configurationList = [configOne, configTwo, configThree, configFour]
   where
     startSt    = St 0
 
@@ -98,20 +86,3 @@ configList = [configOne, configTwo, configThree, configFour]
 
     inputFour  = PIn 0 0
     configFour = Config inputFour startSt
-
-getTestResult ::  Bool -> Int -> Config ->  [TestResult]
-getTestResult getTail howManyResults config = conTail $ sampleN howManyResults test
-  where
-    conTail x = if getTail then P.tail x else x
-    test      = runOneTest config
-
-runConfigList :: [Config] -> [[TestResult]]
-runConfigList = runConfigList' True 2
-
-runConfigList' :: Bool -> Int -> [Config] -> [[TestResult]]
-runConfigList' getTail howMany = P.map test
-  where
-    test = getTestResult getTail howMany
-
-defaultTest :: [[TestResult]]
-defaultTest = runConfigList configList
