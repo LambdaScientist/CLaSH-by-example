@@ -1,0 +1,9 @@
+name:           TestPackage
+version:        0.1
+synopsis:       Small group of CLaSH examples
+
+library
+  hs-source-dirs:   ConvertedClashExamples
+  exposed-modules:
+    SAFE.CommonClash
+    SAFE.TestingTools

@@ -3,6 +3,9 @@ This project is a collection of CLaSH examples.
 
 Including :
 - A conversion of source code from VHDL BY EXAMPLE by Blaine C. Readler
+  - This code in the folder ClashByExample_Conversions
+    - The code it meant to be easy to read as VHDL, not necessarily the best Haskell code
+  - This code is to show better Haskell practices
 - Some modified version examples on CLaSH's website
   * https://hackage.haskell.org/package/clash-prelude-0.10.14/docs/CLaSH-Prelude-BlockRam.html#usingrams
 
@@ -21,3 +24,16 @@ Helpful links:
 - CLaSH reference -> https://hackage.haskell.org/package/clash-prelude-0.10.14/docs/CLaSH-Tutorial.html
 - Haskell reference -> http://cheatsheet.codeslower.com/CheatSheet.pdf
 - Lens reference -> https://github.com/ekmett/lens/wiki/Operators
+- https://www.schoolofhaskell.com/school/starting-with-haskell/introduction-to-haskell/5-type-classes
+
+
+Stack Overflow:
+
+In Haskell how can I match a type class with an instance of that type class
+http://stackoverflow.com/questions/41412958/in-haskell-how-can-i-match-a-type-class-with-an-instance-of-that-type-class
+
+Haskell implementing different behavior for types to increase code resue
+http://stackoverflow.com/questions/41400132/haskell-implementing-different-behavior-for-types-to-increase-code-resue
+
+Haskell assert that a type will match another
+http://stackoverflow.com/questions/41403208/haskell-assert-that-a-type-will-match-another

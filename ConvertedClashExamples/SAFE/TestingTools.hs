@@ -1,54 +1,54 @@
 {-# LANGUAGE DataKinds        #-}
 {-# LANGUAGE FlexibleContexts #-}
--- {-# LANGUAGE KindSignatures   #-}
 {-# LANGUAGE MagicHash        #-}
 {-# LANGUAGE RecordWildCards  #-}
--- {-# LANGUAGE TemplateHaskell  #-}
 {-# LANGUAGE RankNTypes  #-}
 {-# LANGUAGE ExistentialQuantification  #-}
 {-# LANGUAGE AllowAmbiguousTypes  #-}
 {-# LANGUAGE ScopedTypeVariables  #-}
 {-# LANGUAGE MultiParamTypeClasses  #-}
 
-module TestingTools where
+module SAFE.TestingTools where
 
 import qualified Prelude as P
 import CLaSH.Prelude
 
+import Text.PrettyPrint.HughesPJClass
+
 --------------------------------------------------------------------------------
 -- Abstract Area
 --------------------------------------------------------------------------------
-class (Eq pin, Show pin) => PortIn pin
+class (Eq pin, Pretty pin) => PortIn pin
 
-class (Eq st, Show st) => SysState st
+class (Eq st, Pretty st) => SysState st
 
-class (Show trans) => Transition trans where
-  runOneTest :: forall st . (SysState st)
+class (Pretty trans) => Transition trans where
+  runOneTest :: forall st
+              . (SysState st)
              => trans
              -> (trans -> Signal st)
              -> Signal TestResult
 
-data TestResult = forall st trans . (Transition trans, Show st, SysState st) =>
-                           TestResult { initConfig :: trans
-                                      , endSt      :: st
-                                      }
-instance Show TestResult where
-  show TestResult {..} =
-         "TestResult:\n initConfig = " P.++ show initConfig
-    P.++ "\n Result = " P.++ show endSt
-    P.++ "\n\n"
-
+data TestResult = forall st trans
+                . (Transition trans, Pretty st, SysState st, Pretty trans)
+               => TestResult { initConfig :: trans
+                             , endSt      :: st
+                             }
+instance Pretty TestResult where
+  pPrint TestResult {..} = text "TestResult:"
+                       $+$ text "initConfig ="
+                       <+> (pPrint initConfig
+                            $+$ text "endSt =" <+> pPrint endSt)
 
 -----This will be used if no changes are needed -------------------------------
 runOneTest' :: forall st trans
-             . (SysState st, Show st, Transition trans)
+             . (SysState st, Pretty st, Transition trans)
             => trans
             -> (trans -> Signal st)
             -> Signal TestResult
 runOneTest' config topEntity' = TestResult config <$> result
   where
     result = topEntity' config
-
 --------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------
@@ -87,7 +87,15 @@ runConfigList' getTail howMany topEntity' = P.map test
 --------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------
--- Stuff to define in each file
+-- Functions to help with understanding test results
+--------------------------------------------------------------------------------
+showT :: (Show s) => s -> Doc
+showT = text.show
+
+
+
+--------------------------------------------------------------------------------
+-- Stuff to define in each file that wants to use the testing tools
 --------------------------------------------------------------------------------
 {-
 instance PortIn PIn
@@ -96,9 +104,10 @@ instance SysState St
 data Config = Config { input'  :: PIn
                      , startSt' :: St
                      }
-instance Show Config where
-  show Config{..} = "Config:\n input = " P.++ show input'
-               P.++ "\n startSt = " P.++ show startSt'
+instance Pretty Config where
+ pPrint Config{..} = text "Config:"
+                 $+$ text "input ="   <+> pPrint input
+                 $+$ text "startSt =" <+>  pPrint startSt
 instance  Transition Config where
   runOneTest = runOneTest'
 
@@ -111,8 +120,8 @@ setupAndRun :: [[TestResult]]
 setupAndRun = runConfigList setupTest configurationList
 
 --Probably no copy pasta here
-instance Show PIn where
-instance Show St where
+instance Pretty PIn where
+instance Pretty St where
 configurationList :: [Config]
 
 -}

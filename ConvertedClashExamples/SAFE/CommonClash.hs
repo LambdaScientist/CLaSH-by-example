@@ -7,10 +7,11 @@
 {-# LANGUAGE ScopedTypeVariables  #-}
 {-# LANGUAGE MultiParamTypeClasses  #-}
 
-module CommonClash (bnot) where
+module SAFE.CommonClash (bnot) where
 
 import qualified Prelude as P
 import CLaSH.Prelude
+
 
 
 bnot :: Bit -> Bit

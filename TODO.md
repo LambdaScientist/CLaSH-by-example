@@ -1,0 +1,11 @@
+TODO:
+- Add breakdown of module behavior
+- Explain the extensions
+- Convert remaining files
+  - While doing this move common clash functions to the CommonClash library
+- Start building testing Stuff
+  - Results expected value
+  - DocTest
+  - hspec
+  - QuickCheck
+  - Tasty
