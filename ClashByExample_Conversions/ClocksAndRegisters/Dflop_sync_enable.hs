@@ -5,7 +5,6 @@
 {-# LANGUAGE RecordWildCards  #-}
 {-# LANGUAGE TemplateHaskell  #-}
 
-
 module Dflop_en_clr where
 
 import qualified Prelude as P
@@ -15,7 +14,6 @@ import Control.Monad.Trans.State
 import CLaSH.Sized.Internal.BitVector
 
 import CLaSH.Signal.Delayed.Explicit
-
 
 --inputs
 data PIn = PIn { _in_1    :: Bit
@@ -39,7 +37,6 @@ instance Show St where
  show St {..} =
         "St\n\t _out_1 = " P.++ show _out_1
 
-
 onTrue :: St -> PIn -> Bool -> St
 onTrue st PIn{..} edgeDetect = shouldReset
   where
@@ -48,13 +45,9 @@ onTrue st PIn{..} edgeDetect = shouldReset
     enabled = if _enable then shouldClear  else st
     shouldClear = if _clear_n then St 0 else st{ _out_1 = _in_1 }
 
-
-
-
 bnot :: Bit -> Bit
 bnot 1 = 0
 bnot _ = 1
-
 
 topEntity :: St -> Signal PIn -> Signal St
 topEntity st pin = result
@@ -64,14 +57,14 @@ topEntity st pin = result
     clk = _clk <$> pin
     ---TESTING
 
-    runTop :: Signal St
-    runTop = topEntity (St 0 ) input
-      where
-        input = PIn  <$> oscillate <*> oscillate <*> reset <*> enable <*> clear
-        oscillate = register 1 (bnot <$> oscillate)
-        reset = signal False --
-        clear = signal False --
-        enable = signal False --
+runTop :: Signal St
+runTop = topEntity (St 0 ) input
+  where
+    input = PIn  <$> oscillate <*> oscillate <*> reset <*> enable <*> clear
+    oscillate = register 1 (bnot <$> oscillate)
+    reset = signal False --
+    clear = signal False --
+    enable = signal False --
 
 
 data TestResult = TestResult { initConfig  :: Config

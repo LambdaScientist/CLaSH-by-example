@@ -5,7 +5,6 @@
 {-# LANGUAGE RecordWildCards  #-}
 {-# LANGUAGE TemplateHaskell  #-}
 
-
 module SimpleDFlopWithReset where
 
 import qualified Prelude as P
@@ -15,7 +14,6 @@ import Control.Monad.Trans.State
 import CLaSH.Sized.Internal.BitVector
 
 import CLaSH.Signal.Delayed.Explicit
-
 
 --inputs
 data PIn = PIn { _in_1 :: Bit
@@ -33,7 +31,6 @@ instance Show St where
  show St {..} =
         "St\n\t _out_1 = " P.++ show _out_1
 
-
 onTrue :: St -> PIn -> Bool -> St
 onTrue st PIn{..} condition = if _reset then St 0 else doinstead
   where
@@ -43,14 +40,12 @@ bnot :: Bit -> Bit
 bnot 1 = 0
 bnot _ = 1
 
-
 topEntity :: St -> Signal PIn -> Signal St
 topEntity st pin = result
   where
     result = register st (onTrue <$> result <*> pin <*> rising )
     rising = isRising 0 clk
     clk = _clk <$> pin
-
 
 ---TESTING
 data TestResult = TestResult { initConfig  :: Config

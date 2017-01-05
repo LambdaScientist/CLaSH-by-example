@@ -5,7 +5,6 @@
 {-# LANGUAGE RecordWildCards  #-}
 {-# LANGUAGE TemplateHaskell  #-}
 
-
 module Clks_n_regs_5 where
 
 import qualified Prelude as P
@@ -13,9 +12,6 @@ import CLaSH.Prelude
 import Control.Lens hiding ((:>))
 import Control.Monad.Trans.State
 import Control.Monad
-
--- import CLaSH.Signal.Delayed.Explicit
-
 
 --inputs
 data PIn = PIn { _clk   :: Bit

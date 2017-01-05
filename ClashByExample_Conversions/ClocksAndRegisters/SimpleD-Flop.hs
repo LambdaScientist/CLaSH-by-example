@@ -5,7 +5,6 @@
 {-# LANGUAGE RecordWildCards  #-}
 {-# LANGUAGE TemplateHaskell  #-}
 
-
 module SimpleDFlop where
 
 import qualified Prelude as P
@@ -15,7 +14,6 @@ import Control.Monad.Trans.State
 import CLaSH.Sized.Internal.BitVector
 
 import CLaSH.Signal.Delayed.Explicit
-
 
 --inputs
 data PIn = PIn { _in_1 :: Bit
@@ -32,14 +30,12 @@ instance Show St where
  show St {..} =
         "St\n\t _out_1 = " P.++ show _out_1
 
-
 onTrue :: St -> PIn -> Bool -> St
 onTrue st PIn{..} condition = if condition then st{ _out_1 = _in_1 } else st
 
 bnot :: Bit -> Bit
 bnot 1 = 0
 bnot _ = 1
-
 
 topEntity :: St -> Signal PIn -> Signal St
 topEntity st pin = result
@@ -48,15 +44,12 @@ topEntity st pin = result
     rising = isRising 0 clk
     clk = _clk <$> pin
 
-
 ---TESTING
-
 runTop :: Signal St
 runTop = topEntity (St 0 ) input
   where
     input = PIn  <$> (bnot <$> oscillate) <*> oscillate -- <*>
     oscillate = register 1 (bnot <$> oscillate)
-    ---TESTING
 
 data TestResult = TestResult { initConfig  :: Config
                              , endSt        :: St
@@ -80,7 +73,6 @@ runOneTest config = TestResult config <$> result
     result = topEntity startingState inputSignal
     startingState = startS config
     inputSignal   = signal $ input config
-
 
 configList :: [Config]
 configList = [configOne, configTwo, configThree, configFour]

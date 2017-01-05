@@ -5,7 +5,6 @@
 {-# LANGUAGE RecordWildCards  #-}
 {-# LANGUAGE TemplateHaskell  #-}
 
-
 module Clks_n_regs_4 where
 
 import qualified Prelude as P
@@ -13,7 +12,6 @@ import CLaSH.Prelude
 import Control.Lens hiding ((:>))
 import Control.Monad.Trans.State
 import Control.Monad
-
 
 --inputs
 data PIn = PIn { _clk   :: Bit
@@ -43,10 +41,8 @@ instance Show St where
    P.++ "\n\t _stop_d2 = " P.++ show _stop_d2
    P.++ "\n\t _count = " P.++ show _count
 
-
 resetSTKeepCount :: BitVector 4 -> St
 resetSTKeepCount = St False 0 False False
-
 
 onTrue :: St -> PIn -> Bool -> St
 onTrue st@St{..} PIn{..} risingEdge = flip execState st $
@@ -66,10 +62,6 @@ bnot :: Bit -> Bit
 bnot 1 = 0
 bnot _ = 1
 
--- bit2Bool :: Bit -> Bool
--- bit2Bool 1 = True
--- bit2Bool _ = False
-
 topEntity :: St -> Signal PIn -> Signal St
 topEntity st pin = result
   where
@@ -77,9 +69,7 @@ topEntity st pin = result
     rising = isRising 0 clk
     clk = _clk <$> pin
 
-
 ---TESTING
-
 runTop :: Signal St
 runTop = topEntity (St False 0 False False 0 ) input
   where
@@ -87,7 +77,6 @@ runTop = topEntity (St False 0 False False 0 ) input
     oscillate = register 1 (bnot <$> oscillate)
     reset = signal False --
     oscillateTF = register True (not <$> oscillateTF)
-
 
 data TestResult = TestResult { initConfig  :: Config
                              , endSt        :: St
@@ -111,7 +100,6 @@ runOneTest config = TestResult config <$> result
     result = topEntity startingState inputSignal
     startingState = startS config
     inputSignal   = signal $ input config
-
 
 configList :: [Config]
 configList = [configOne, configTwo, configThree, configFour]
