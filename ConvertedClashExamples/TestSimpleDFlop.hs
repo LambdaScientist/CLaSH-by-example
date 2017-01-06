@@ -30,9 +30,6 @@ configurationList = [configOne, configTwo, configThree, configFour]
     configFour = Config inputFour startSt
 
 ---TESTING
-instance PortIn PIn
-instance SysState St
-
 data Config = Config { input  :: PIn
                      , startSt :: St
                      }

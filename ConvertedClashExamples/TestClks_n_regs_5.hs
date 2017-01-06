@@ -31,11 +31,6 @@ configurationList = [configOne, configTwo, configThree, configFour]
 
 ---TESTING
 
--- Move these when I seperate the files
-instance PortIn PIn
-instance SysState St
-----------------------------------------
-
 data Config = Config { input  :: PIn
                      , startSt :: St
                      }deriving(Eq,Show)

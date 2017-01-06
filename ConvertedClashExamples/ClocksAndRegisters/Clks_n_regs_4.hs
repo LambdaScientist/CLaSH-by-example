@@ -11,16 +11,10 @@ import Control.Lens hiding ((:>))
 import Control.Monad.Trans.State
 import Control.Monad
 
+import SAFE.TestingTools
+import SAFE.CommonClash
+
 import Text.PrettyPrint.HughesPJClass
-
---------------------------------------------------------------------------------
--- Remove this when test is turned into a library
---------------------------------------------------------------------------------
-
-showT :: (Show s) => s -> Doc
-showT = text.show
-
---------------------------------------------------------------------------------
 
 --inputs
 data PIn = PIn { _clk   :: Bit
@@ -28,7 +22,7 @@ data PIn = PIn { _clk   :: Bit
                , _start :: Bool
                , _stop  :: Bool
                } deriving (Eq, Show)
-
+instance PortIn PIn
 instance Pretty PIn where
   pPrint PIn {..} = text "PIn:"
                 $+$ text "_clk ="   <+> showT _clk
@@ -43,6 +37,7 @@ data St = St { _cntEn   :: Bool
              , _count    :: BitVector 4
              } deriving (Eq, Show)
 makeLenses ''St
+instance SysState St
 instance Pretty St where
  pPrint St {..} = text "St"
               $+$ text "_cntEn ="   <+>  showT _cntEn

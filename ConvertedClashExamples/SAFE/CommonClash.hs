@@ -1,6 +1,6 @@
 {-# LANGUAGE NoImplicitPrelude #-}
 
-module SAFE.CommonClash (bnot) where
+module SAFE.CommonClash (bnot, bit2Bool, showT) where
 
 import Text.PrettyPrint.HughesPJClass
 

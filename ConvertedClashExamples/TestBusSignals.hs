@@ -30,9 +30,6 @@ configurationList = [configOne, configTwo, configThree, configFour]
     configFour  = Config inputFour startSt
 ---TESTING
 
-
-----------------------------------------
-
 data Config = Config { input  :: PIn
                      , startSt :: St
                      }deriving(Eq,Show)
