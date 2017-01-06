@@ -64,6 +64,3 @@ topEntity' st pin = reg
 
 
 ---TESTING
---
--- configList :: [Config]
--- configList = [configOne, configTwo, configThree, configFour]

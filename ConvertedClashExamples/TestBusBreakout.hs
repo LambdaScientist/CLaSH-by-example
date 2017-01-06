@@ -1,7 +1,7 @@
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE RecordWildCards  #-}
 
-module TestClks_n_regs_4 where
+module TestBusBreakout where
 
 import CLaSH.Prelude
 
