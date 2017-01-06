@@ -1,13 +1,8 @@
-{-# LANGUAGE DataKinds        #-}
-{-# LANGUAGE FlexibleContexts #-}
-{-# LANGUAGE KindSignatures   #-}
-{-# LANGUAGE MagicHash        #-}
+{-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE RecordWildCards  #-}
-{-# LANGUAGE TemplateHaskell  #-}
 
 module TestSimpleDFlop where
 
-import qualified Prelude as P
 import CLaSH.Prelude
 
 import SAFE.TestingTools
@@ -16,14 +11,6 @@ import SAFE.CommonClash
 import ClocksAndRegisters.SimpleDFlop
 
 import Text.PrettyPrint.HughesPJClass
-
-instance Pretty PIn where
-  pPrint PIn {..} = text "PIn:"
-                $+$ text "_in_1 =" <+> showT _in_1
-                $+$ text "_clk ="  <+> showT _clk
-instance Pretty St where
- pPrint St {..} = text "St"
-              $+$ text "_out_1 =" <+> showT _out_1
 
 configurationList :: [Config]
 configurationList = [configOne, configTwo, configThree, configFour]
@@ -63,3 +50,6 @@ setupTest (Config pin st) = topEntity' st sPin
 
 setupAndRun :: [[TestResult]]
 setupAndRun = runConfigList setupTest configurationList
+
+ppSetupAndRun :: Doc
+ppSetupAndRun = pPrint setupAndRun

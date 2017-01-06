@@ -1,12 +1,6 @@
-{-# LANGUAGE DataKinds        #-}
-{-# LANGUAGE FlexibleContexts #-}
-{-# LANGUAGE MagicHash        #-}
 {-# LANGUAGE RecordWildCards  #-}
 {-# LANGUAGE RankNTypes  #-}
 {-# LANGUAGE ExistentialQuantification  #-}
-{-# LANGUAGE AllowAmbiguousTypes  #-}
-{-# LANGUAGE ScopedTypeVariables  #-}
-{-# LANGUAGE MultiParamTypeClasses  #-}
 
 module SAFE.TestingTools where
 
@@ -85,13 +79,6 @@ runConfigList' getTail howMany topEntity' = P.map test
   where
     test config = getTestResult getTail howMany config topEntity'
 --------------------------------------------------------------------------------
-
---------------------------------------------------------------------------------
--- Functions to help with understanding test results
---------------------------------------------------------------------------------
-showT :: (Show s) => s -> Doc
-showT = text.show
-
 
 
 --------------------------------------------------------------------------------

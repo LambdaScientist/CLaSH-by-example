@@ -1,23 +1,39 @@
 {-# LANGUAGE DataKinds        #-}
-{-# LANGUAGE FlexibleContexts #-}
-{-# LANGUAGE KindSignatures   #-}
-{-# LANGUAGE MagicHash        #-}
 {-# LANGUAGE RecordWildCards  #-}
 {-# LANGUAGE TemplateHaskell  #-}
 
 module ClocksAndRegisters.SimpleDFlop where
 
-import qualified Prelude as P
 import CLaSH.Prelude
+
+import qualified Prelude as P
 import Control.Lens hiding ((:>))
+
+import Text.PrettyPrint.HughesPJClass
+--------------------------------------------------------------------------------
+-- Remove this when test is turned into a library
+--------------------------------------------------------------------------------
+
+showT :: (Show s) => s -> Doc
+showT = text.show
+
+--------------------------------------------------------------------------------
 
 --inputs
 data PIn = PIn { _in_1 :: Bit
                , _clk  :: Bit
                } deriving (Eq)
+instance Pretty PIn where
+  pPrint PIn {..} = text "PIn:"
+                $+$ text "_in_1 =" <+> showT _in_1
+                $+$ text "_clk ="  <+> showT _clk
+
 data St = St { _out_1 :: Bit
              } deriving (Eq)
 makeLenses ''St
+instance Pretty St where
+ pPrint St {..} = text "St"
+              $+$ text "_out_1 =" <+> showT _out_1
 
 onTrue :: St -> PIn -> Bool -> St
 onTrue st PIn{..} condition = if condition then st{ _out_1 = _in_1 } else st

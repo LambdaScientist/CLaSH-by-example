@@ -1,11 +1,11 @@
 {-# LANGUAGE DataKinds        #-}
 {-# LANGUAGE RecordWildCards  #-}
 {-# LANGUAGE TemplateHaskell  #-}
+{-# LANGUAGE NoImplicitPrelude  #-}
 
-module ClocksAndRegisters.Clks_n_regs_4 where
+module ClocksAndRegisters.Clks_n_regs_5 where
 
 import CLaSH.Prelude
-
 import Control.Lens hiding ((:>))
 import Control.Monad.Trans.State
 import Control.Monad
@@ -22,18 +22,18 @@ showT = text.show
 --------------------------------------------------------------------------------
 
 --inputs
-data PIn = PIn { _clk   :: Bit
-               , _reset :: Bool
-               , _start :: Bool
-               , _stop  :: Bool
+data PIn = PIn { _clk    :: Bit
+               , _reset  :: Bool
+               , _start  :: Bool
+               , _stop   :: Bool
                } deriving (Eq, Show)
-
 instance Pretty PIn where
   pPrint PIn {..} = text "PIn:"
                 $+$ text "_clk ="   <+> showT _clk
                 $+$ text "_reset =" <+> showT _reset
                 $+$ text "_start =" <+> showT _start
                 $+$ text "_stop ="  <+> showT _stop
+
 --Outputs and state data
 data St = St { _cntEn   :: Bool
              , _countUs :: BitVector 4
@@ -49,6 +49,7 @@ instance Pretty St where
               $+$ text "_stopD1 ="  <+>  showT _stopD1
               $+$ text "_stopD2 ="  <+>  showT _stopD2
               $+$ text "_count ="    <+>  showT _count
+
 resetSTKeepCount :: BitVector 4 -> St
 resetSTKeepCount = St False 0 False False
 
@@ -61,7 +62,8 @@ onTrue st@St{..} PIn{..} risingEdge = flip execState st $
       if _start then  cntEn .= True
       else when _stop $ cntEn .= False
       --Counter
-      when _cntEn $ if _countUs == (13::BitVector 4) then countUs .= 0
+      varCntEn <- use cntEn --this gets the current value of the
+      when varCntEn $ if _countUs == (13::BitVector 4) then countUs .= 0
                     else countUs += 1
       stopD1 .= _stop
       stopD2 .= _stopD1
@@ -71,9 +73,11 @@ topEntity = topEntity' st
   where
     st = St False 0 False False 0
 
-topEntity' :: St ->  Signal PIn -> Signal St--Signal st
+topEntity' :: St -> Signal PIn -> Signal St
 topEntity' st pin = result
   where
     result = register st (onTrue <$> result <*> pin <*> rising )
     rising = isRising 0 clk
     clk = _clk <$> pin
+
+---TESTING

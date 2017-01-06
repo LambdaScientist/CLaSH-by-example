@@ -1,14 +1,14 @@
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE RecordWildCards  #-}
 
-module TestClks_n_regs_4 where
+module TestClks_n_regs_5 where
 
 import CLaSH.Prelude
 
 import SAFE.TestingTools
 import SAFE.CommonClash
 
-import ClocksAndRegisters.Clks_n_regs_4
+import ClocksAndRegisters.Clks_n_regs_5
 
 import Text.PrettyPrint.HughesPJClass
 
@@ -17,7 +17,7 @@ configurationList = [configOne, configTwo, configThree, configFour]
   where
     startSt    = St False 0 False False 0
 
-    inputOne = PIn 0 False False False
+    inputOne  = PIn 0 False False False
     configOne = Config inputOne startSt
 
     inputTwo  = PIn 0 False False False
