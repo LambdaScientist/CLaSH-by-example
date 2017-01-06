@@ -1,20 +1,26 @@
 {-# LANGUAGE DataKinds        #-}
-{-# LANGUAGE FlexibleContexts #-}
-{-# LANGUAGE KindSignatures   #-}
-{-# LANGUAGE MagicHash        #-}
 {-# LANGUAGE RecordWildCards  #-}
 {-# LANGUAGE TemplateHaskell  #-}
+{-# LANGUAGE NoImplicitPrelude  #-}
 
 module ClocksAndRegisters.SimpleDFlopWithReset where
 
-import qualified Prelude as P
 import CLaSH.Prelude
+
 import Control.Lens hiding ((:>))
 import Control.Monad.Trans.State
-import CLaSH.Sized.Internal.BitVector
+import Control.Monad
 
-import CLaSH.Signal.Delayed.Explicit
+import Text.PrettyPrint.HughesPJClass
 
+--------------------------------------------------------------------------------
+-- Remove this when test is turned into a library
+--------------------------------------------------------------------------------
+
+showT :: (Show s) => s -> Doc
+showT = text.show
+
+--------------------------------------------------------------------------------
 --inputs
 data PIn = PIn { _in_1 :: Bit
                , _clk  :: Bit

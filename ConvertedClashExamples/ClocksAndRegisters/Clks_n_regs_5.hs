@@ -6,6 +6,7 @@
 module ClocksAndRegisters.Clks_n_regs_5 where
 
 import CLaSH.Prelude
+
 import Control.Lens hiding ((:>))
 import Control.Monad.Trans.State
 import Control.Monad
@@ -48,7 +49,7 @@ instance Pretty St where
               $+$ text "_countUs =" <+>  showT _countUs
               $+$ text "_stopD1 ="  <+>  showT _stopD1
               $+$ text "_stopD2 ="  <+>  showT _stopD2
-              $+$ text "_count ="    <+>  showT _count
+              $+$ text "_count ="   <+>  showT _count
 
 resetSTKeepCount :: BitVector 4 -> St
 resetSTKeepCount = St False 0 False False
