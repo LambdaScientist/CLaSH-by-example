@@ -1,6 +1,7 @@
 {-# LANGUAGE DataKinds        #-}
 {-# LANGUAGE RecordWildCards  #-}
 {-# LANGUAGE TemplateHaskell  #-}
+{-# LANGUAGE NoImplicitPrelude  #-}
 
 module ClocksAndRegisters.Clks_n_regs_4 where
 
