@@ -1,12 +1,12 @@
 {-# LANGUAGE DataKinds        #-}
 {-# LANGUAGE RecordWildCards  #-}
 {-# LANGUAGE TemplateHaskell  #-}
+{-# LANGUAGE NoImplicitPrelude  #-}
 
 module ClocksAndRegisters.SimpleDFlop where
 
 import CLaSH.Prelude
 
-import qualified Prelude as P
 import Control.Lens hiding ((:>))
 
 import Text.PrettyPrint.HughesPJClass
@@ -20,23 +20,23 @@ showT = text.show
 --------------------------------------------------------------------------------
 
 --inputs
-data PIn = PIn { _in_1 :: Bit
+data PIn = PIn { _in1 :: Bit
                , _clk  :: Bit
-               } deriving (Eq)
+               } deriving (Eq, Show)
 instance Pretty PIn where
   pPrint PIn {..} = text "PIn:"
-                $+$ text "_in_1 =" <+> showT _in_1
+                $+$ text "_in1 =" <+> showT _in1
                 $+$ text "_clk ="  <+> showT _clk
 
-data St = St { _out_1 :: Bit
-             } deriving (Eq)
+data St = St { _out1 :: Bit
+             } deriving (Eq, Show)
 makeLenses ''St
 instance Pretty St where
  pPrint St {..} = text "St"
-              $+$ text "_out_1 =" <+> showT _out_1
+              $+$ text "_out1 =" <+> showT _out1
 
 onTrue :: St -> PIn -> Bool -> St
-onTrue st PIn{..} condition = if condition then st{ _out_1 = _in_1 } else st
+onTrue st PIn{..} condition = if condition then st{ _out1 = _in1 } else st
 
 topEntity :: Signal PIn -> Signal St
 topEntity = topEntity' startSt
@@ -51,11 +51,3 @@ topEntity' st pin = result
     clk = _clk <$> pin
 
 ---TESTING
-instance Show PIn where
-  show PIn {..} =
-    "PIn\n\t _in_1 = " P.++ show _in_1
-    P.++ "\n\t _clk = " P.++ show _clk
-
-instance Show St where
- show St {..} =
-        "St\n\t _out_1 = " P.++ show _out_1

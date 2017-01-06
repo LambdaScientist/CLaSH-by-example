@@ -3,46 +3,45 @@
 {-# LANGUAGE TemplateHaskell  #-}
 {-# LANGUAGE NoImplicitPrelude  #-}
 
-module ClocksAndRegisters.Dflop_en_clr where
+module ClocksAndRegisters.Dflop_sync_enable where
 
-  import CLaSH.Prelude
+import CLaSH.Prelude
 
-  import Control.Lens hiding ((:>))
-  import Control.Monad.Trans.State
-  import Control.Monad
+import Control.Lens hiding ((:>))
 
-  import Text.PrettyPrint.HughesPJClass
+import Text.PrettyPrint.HughesPJClass
 
-  --------------------------------------------------------------------------------
-  -- Remove this when test is turned into a library
-  --------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+-- Remove this when test is turned into a library
+--------------------------------------------------------------------------------
 
-  showT :: (Show s) => s -> Doc
-  showT = text.show
+showT :: (Show s) => s -> Doc
+showT = text.show
 
-  --------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 --inputs
-data PIn = PIn { _in_1    :: Bit
+data PIn = PIn { _in1    :: Bit
                , _clk     :: Bit
                , _reset   :: Bool
                , _enable  :: Bool
-               , _clear_n :: Bool
-               } deriving (Eq)
-instance Show PIn where
-  show PIn {..} =
-    "PIn\n\t _in_1 = " P.++ show _in_1
-    P.++ "\n\t _clk = " P.++ show _clk
-    P.++ "\n\t _reset = " P.++ show _reset
-    P.++ "\n\t _enable = " P.++ show _enable
-    P.++ "\n\t _clear_n = " P.++ show _clear_n
+               , _clearN :: Bool
+               } deriving (Eq, Show)
+instance Pretty PIn where
+  pPrint PIn {..} = text "PIn:"
+                $+$ text "_in1 ="    <+> showT _in1
+                $+$ text "_clk ="    <+> showT _clk
+                $+$ text "_reset ="  <+> showT _reset
+                $+$ text "_enable =" <+> showT _enable
+                $+$ text "_clearN ="  <+> showT _clearN
+
 --Outputs and state data
-data St = St { _out_1 :: Bit
-             } deriving (Eq)
+data St = St { _out1 :: Bit
+             } deriving (Eq, Show)
 makeLenses ''St
-instance Show St where
- show St {..} =
-        "St\n\t _out_1 = " P.++ show _out_1
+instance Pretty St where
+ pPrint St {..} = text "St"
+              $+$ text "_out1 ="   <+>  showT _out1
 
 onTrue :: St -> PIn -> Bool -> St
 onTrue st PIn{..} edgeDetect = shouldReset
@@ -50,83 +49,16 @@ onTrue st PIn{..} edgeDetect = shouldReset
     shouldReset = if _reset then St 0 else risingEdge
     risingEdge = if edgeDetect then enabled else st
     enabled = if _enable then shouldClear  else st
-    shouldClear = if _clear_n then St 0 else st{ _out_1 = _in_1 }
+    shouldClear = if _clearN then St 0 else st{ _out1 = _in1 }
 
-bnot :: Bit -> Bit
-bnot 1 = 0
-bnot _ = 1
+topEntity :: Signal PIn -> Signal St
+topEntity = topEntity' st
+  where
+    st = St 0
 
-topEntity :: St -> Signal PIn -> Signal St
-topEntity st pin = result
+topEntity' :: St -> Signal PIn -> Signal St
+topEntity' st pin = result
   where
     result = register st (onTrue <$> result <*> pin <*> rising )
     rising = isRising 0 clk
     clk = _clk <$> pin
-    ---TESTING
-
-runTop :: Signal St
-runTop = topEntity (St 0 ) input
-  where
-    input = PIn  <$> oscillate <*> oscillate <*> reset <*> enable <*> clear
-    oscillate = register 1 (bnot <$> oscillate)
-    reset = signal False --
-    clear = signal False --
-    enable = signal False --
-
-
-data TestResult = TestResult { initConfig  :: Config
-                             , endSt        :: St
-                             }deriving (Eq)
-instance Show TestResult where
-  show TestResult {..} =
-         "TestResult:\n initConfig = " P.++ show initConfig
-    P.++ "\n Result = " P.++ show endSt
-    P.++ "\n\n"
-data Config = Config { input  :: PIn
-                     , startS :: St
-                     }deriving (Eq)
-instance Show Config where
- show Config {..} =
-        "Config:\n input = " P.++ show input
-   P.++ "\n startS = " P.++ show startS
-
-runOneTest :: Config -> Signal TestResult
-runOneTest config = TestResult config <$> result
-  where
-    result = topEntity startingState inputSignal
-    startingState = startS config
-    inputSignal   = signal $ input config
-
-configList :: [Config]
-configList = [configOne, configTwo, configThree, configFour]
-  where
-    startSt    = St 0
-
-    inputOne  = PIn 0 0 False False False
-    configOne = Config inputOne startSt
-
-    inputTwo  = PIn 0 0 False False False
-    configTwo = Config inputTwo startSt
-
-    inputThree  = PIn 0 0 False False False
-    configThree = Config inputThree startSt
-
-    inputFour  = PIn 0 0 False False False
-    configFour = Config inputFour startSt
-
-getTestResult ::  Bool -> Int -> Config ->  [TestResult]
-getTestResult getTail howManyResults config = conTail $ sampleN howManyResults test
-  where
-    conTail x = if getTail then P.tail x else x
-    test      = runOneTest config
-
-runConfigList :: [Config] -> [[TestResult]]
-runConfigList = runConfigList' True 2
-
-runConfigList' :: Bool -> Int -> [Config] -> [[TestResult]]
-runConfigList' getTail howMany = P.map test
-  where
-    test = getTestResult getTail howMany
-
-defaultTest :: [[TestResult]]
-defaultTest = runConfigList configList
