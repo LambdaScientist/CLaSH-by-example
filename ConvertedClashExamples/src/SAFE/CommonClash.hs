@@ -4,8 +4,11 @@ module SAFE.CommonClash (bnot, bit2Bool, showT) where
 
 import Text.PrettyPrint.HughesPJClass
 
-import qualified Prelude as P
 import CLaSH.Prelude
+
+--------------------------------------------------------------------------------
+-- Functions to help with CLaSH
+--------------------------------------------------------------------------------
 
 bnot :: Bit -> Bit
 bnot 1 = 0

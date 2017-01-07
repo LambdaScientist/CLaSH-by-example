@@ -1,38 +1,34 @@
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE RecordWildCards  #-}
 
-module TestClks_n_regs_4 where
+module InAndOut.TestIntermediateSignal where
 
 import CLaSH.Prelude
 
 import SAFE.TestingTools
 import SAFE.CommonClash
 
-import ClocksAndRegisters.Clks_n_regs_4
+import InAndOut.Models.IntermediateSignal
 
 import Text.PrettyPrint.HughesPJClass
 
 configurationList :: [Config]
 configurationList = [configOne, configTwo, configThree, configFour]
   where
-    startSt    = St False 0 False False 0
+    startSt    = St 0 0
 
-    inputOne = PIn 0 False False False
-    configOne = Config inputOne startSt
+    inputOne   = PIn 1 1 1
+    configOne  = Config inputOne startSt
 
-    inputTwo  = PIn 0 False False False
-    configTwo = Config inputTwo startSt
+    inputTwo    = PIn 1 1 0
+    configTwo  = Config inputTwo startSt
 
-    inputThree  = PIn 0 False False False
-    configThree = Config inputThree startSt
+    inputThree = PIn 1 0 1
+    configThree  = Config inputThree startSt
 
-    inputFour  = PIn 0 False False False
-    configFour = Config inputFour startSt
-
+    inputFour  = PIn 0 1 1
+    configFour  = Config inputFour startSt
 ---TESTING
-
-
-----------------------------------------
 
 data Config = Config { input  :: PIn
                      , startSt :: St

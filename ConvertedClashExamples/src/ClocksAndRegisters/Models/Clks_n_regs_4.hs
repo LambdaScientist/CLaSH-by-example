@@ -3,7 +3,7 @@
 {-# LANGUAGE TemplateHaskell  #-}
 {-# LANGUAGE NoImplicitPrelude  #-}
 
-module ClocksAndRegisters.Clks_n_regs_4 where
+module ClocksAndRegisters.Models.Clks_n_regs_4 where
 
 import CLaSH.Prelude
 
