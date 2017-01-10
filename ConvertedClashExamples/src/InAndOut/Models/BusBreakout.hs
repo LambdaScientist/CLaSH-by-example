@@ -3,7 +3,7 @@
 {-# LANGUAGE TemplateHaskell  #-}
 {-# LANGUAGE NoImplicitPrelude  #-}
 
-module InAndOut.BusBreakout where
+module InAndOut.Models.BusBreakout where
 
 import CLaSH.Prelude
 import Control.Lens hiding ((:>))

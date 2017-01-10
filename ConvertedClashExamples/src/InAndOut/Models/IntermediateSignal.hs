@@ -3,7 +3,7 @@
 {-# LANGUAGE TemplateHaskell  #-}
 {-# LANGUAGE NoImplicitPrelude  #-}
 
-module InAndOut.Modles.IntermediateSignal where
+module InAndOut.Models.IntermediateSignal where
 
 import CLaSH.Prelude
 import Control.Lens hiding ((:>))
@@ -15,8 +15,8 @@ import SAFE.TestingTools
 import SAFE.CommonClash
 
 --inputs
-data PIn = PIn { _in1 :: BitVector 4
-               , _in2 :: BitVector 4
+data PIn = PIn { _in1 :: Bit
+               , _in2 :: Bit
                , _in3 :: Bit
                } deriving (Eq, Show)
 instance PortIn PIn
@@ -29,7 +29,7 @@ instance Pretty PIn where
 --Outputs and state data
 data St = St { _out1 :: Bit
              , _out2 :: Bit
-             } deriving (Eq)
+             } deriving (Eq, Show)
 makeLenses ''St
 instance SysState St
 instance Pretty St where

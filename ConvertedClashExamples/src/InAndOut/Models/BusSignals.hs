@@ -3,7 +3,7 @@
 {-# LANGUAGE TemplateHaskell  #-}
 {-# LANGUAGE NoImplicitPrelude  #-}
 
-module InAndOut.BusSignals where
+module InAndOut.Models.BusSignals where
 
 import CLaSH.Prelude
 import Control.Lens hiding ((:>))
@@ -27,7 +27,7 @@ instance Pretty PIn where
                 $+$ text "_in3 =" <+> showT _in3
 
 --Outputs and state data
-data St = St { _out1 :: BitVector 6
+data St = St { _out1 :: BitVector 4
              } deriving (Eq, Show)
 makeLenses ''St
 instance SysState St

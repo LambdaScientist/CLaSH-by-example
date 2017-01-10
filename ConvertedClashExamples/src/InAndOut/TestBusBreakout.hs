@@ -1,14 +1,14 @@
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE RecordWildCards  #-}
 
-module TestBusBreakout where
+module InAndOut.TestBusBreakout where
 
 import CLaSH.Prelude
 
 import SAFE.TestingTools
 import SAFE.CommonClash
 
-import InAndOut.BusBreakout
+import InAndOut.Models.BusBreakout
 
 import Text.PrettyPrint.HughesPJClass
 
