@@ -1,14 +1,14 @@
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE RecordWildCards  #-}
 
-module TestSimpleDFlop where
+module ClocksAndRegisters.TestSimpleDFlop where
 
 import CLaSH.Prelude
 
 import SAFE.TestingTools
 import SAFE.CommonClash
 
-import ClocksAndRegisters.SimpleDFlop
+import ClocksAndRegisters.Models.SimpleDFlop
 
 import Text.PrettyPrint.HughesPJClass
 

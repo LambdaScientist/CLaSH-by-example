@@ -1,14 +1,14 @@
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE RecordWildCards  #-}
 
-module TestClks_n_regs_5 where
+module ClocksAndRegisters.TestDflop_sync_enable where
 
 import CLaSH.Prelude
 
 import SAFE.TestingTools
 import SAFE.CommonClash
 
-import ClocksAndRegisters.Dflop_sync_enable
+import ClocksAndRegisters.Models.Dflop_sync_enable
 
 import Text.PrettyPrint.HughesPJClass
 

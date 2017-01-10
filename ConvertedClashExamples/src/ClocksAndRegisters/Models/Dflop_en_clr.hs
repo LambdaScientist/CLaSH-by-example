@@ -3,7 +3,7 @@
 {-# LANGUAGE TemplateHaskell  #-}
 {-# LANGUAGE NoImplicitPrelude  #-}
 
-module ClocksAndRegisters.Dflop_en_clr where
+module ClocksAndRegisters.Models.Dflop_en_clr where
 
 import CLaSH.Prelude
 
@@ -19,7 +19,7 @@ data PIn = PIn { _in1    :: Bit
                , _clk     :: Bit
                , _reset   :: Bool
                , _enable  :: Bool
-               , clearN :: Bool
+               , _clearN :: Bool
                } deriving (Eq, Show)
 instance PortIn PIn
 instance Pretty PIn where
@@ -28,7 +28,7 @@ instance Pretty PIn where
                 $+$ text "_clk ="    <+> showT _clk
                 $+$ text "_reset ="  <+> showT _reset
                 $+$ text "_enable =" <+> showT _enable
-                $+$ text "clearN ="  <+> showT clearN
+                $+$ text "_clearN ="  <+> showT _clearN
 
 --Outputs and state data
 data St = St { _out1 :: Bit
@@ -47,7 +47,7 @@ onTrue st PIn{..} rEdge = ifReset
                 else ifRising
     ifRising  = if rEdge then ifClear
                 else st
-    ifClear   = if clearN then nullState
+    ifClear   = if _clearN then nullState
                 else ifEnabled
     ifEnabled = if _enable then st{ _out1 = _in1 }
                 else st

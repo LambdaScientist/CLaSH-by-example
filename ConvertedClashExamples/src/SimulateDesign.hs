@@ -3,7 +3,7 @@
 -- import ClocksAndRegisters.TestDflop_en_clr
 -- import ClocksAndRegisters.TestDflop_sync_enable
 -- import ClocksAndRegisters.TestSimpleDFlop
--- import ClocksAndRegisters.TestSimpleDFlopWithReset
+import ClocksAndRegisters.TestSimpleDFlopWithReset
 -- import ClocksAndRegisters.Models.Clks_n_regs_4
 -- import ClocksAndRegisters.Models.Clks_n_regs_5
 -- import ClocksAndRegisters.Models.Dflop_en_clr
@@ -15,7 +15,7 @@
 -- import InAndOut.Models.BusBreakout
 -- import InAndOut.Models.BusSignals
 -- import InAndOut.Models.IntermediateSignal
-import InAndOut.TestIntermediateSignal
+-- import InAndOut.TestIntermediateSignal
 -- import InAndOut.Models.SimpleInOut
 -- import InAndOut.Models.StandardMux1
 -- import InAndOut.Models.StandardMux2

@@ -3,7 +3,7 @@
 {-# LANGUAGE TemplateHaskell  #-}
 {-# LANGUAGE NoImplicitPrelude  #-}
 
-module ClocksAndRegisters.Dflop_sync_enable where
+module ClocksAndRegisters.Models.Dflop_sync_enable where
 
 import CLaSH.Prelude
 

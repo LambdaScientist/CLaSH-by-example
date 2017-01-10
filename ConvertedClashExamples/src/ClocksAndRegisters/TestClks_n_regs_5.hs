@@ -1,14 +1,14 @@
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE RecordWildCards  #-}
 
-module TestClks_n_regs_5 where
+module ClocksAndRegisters.TestClks_n_regs_5 where
 
 import CLaSH.Prelude
 
 import SAFE.TestingTools
 import SAFE.CommonClash
 
-import ClocksAndRegisters.Clks_n_regs_5
+import ClocksAndRegisters.Models.Clks_n_regs_5
 
 import Text.PrettyPrint.HughesPJClass
 

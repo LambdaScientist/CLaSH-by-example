@@ -3,7 +3,7 @@
 {-# LANGUAGE TemplateHaskell  #-}
 {-# LANGUAGE NoImplicitPrelude  #-}
 
-module ClocksAndRegisters.SimpleDFlop where
+module ClocksAndRegisters.Models.SimpleDFlop where
 
 import CLaSH.Prelude
 
