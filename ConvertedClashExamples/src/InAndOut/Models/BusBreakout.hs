@@ -29,11 +29,11 @@ instance Pretty PIn where
 --Outputs and state data
 data St = St { _out1 :: BitVector 6
              } deriving (Eq, Show)
-instance SysState St
 makeLenses ''St
+instance SysState St
 instance Pretty St where
  pPrint St {..} = text "St"
-              $+$ text "_cntEn ="   <+>  showT _out1
+              $+$ text "_cntEn =" <+> showT _out1
 
 
 procSimple :: St -> PIn -> St

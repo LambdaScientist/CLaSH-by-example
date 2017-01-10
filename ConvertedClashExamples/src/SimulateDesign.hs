@@ -12,7 +12,10 @@
 -- import ClocksAndRegisters.Models.SimpleDFlopWithReset
 -- import InAndOut.TestBusBreakout
 -- import InAndOut.TestIntermediateSignal
-import InAndOut.TestBusSignals
+-- import InAndOut.TestBusSignals
+-- import InAndOut.TestSimpleInOut
+-- import InAndOut.TestStandardMux1
+import InAndOut.TestStandardMux2
 -- import InAndOut.Models.BusBreakout
 -- import InAndOut.Models.BusSignals
 -- import InAndOut.Models.IntermediateSignal
