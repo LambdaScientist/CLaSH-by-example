@@ -89,7 +89,8 @@ topEntity :: St -> Signal MPIn -> Signal St
 topEntity st mp = setStDone <$> pin  <*> (SM._done <$> s1) <*> (SM._done <$> s2) <*> (SM._done <$> s3)
   where
     startSt = SM.St SM.Idle 0 False
-    pin = register (St SM.Idle 0 False False False False) (runRegProc <$> pin <*> mp <*> signal False)
+    pin = register (St SM.Idle 0 False False False False)
+                   (runRegProc <$> pin <*> mp <*> signal False)
     sbool = signal False
     pin1 = _pin1 <$> mp
     pin2 = _pin2 <$> mp
