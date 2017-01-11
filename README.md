@@ -3,9 +3,7 @@ This project is a collection of CLaSH examples.
 
 Including :
 - A conversion of source code from VHDL BY EXAMPLE by Blaine C. Readler
-  - This code in the folder ClashByExample_Conversions
-    - The code it meant to be easy to read as VHDL, not necessarily the best Haskell code
-  - This code is to show better Haskell practices
+  - This code also includes some tools to test the logic
 - Some modified version examples on CLaSH's website
   * https://hackage.haskell.org/package/clash-prelude-0.10.14/docs/CLaSH-Prelude-BlockRam.html#usingrams
 
