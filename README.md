@@ -21,6 +21,7 @@ Helpful links:
 - CLaSH reference -> https://hackage.haskell.org/package/clash-prelude-0.10.14/docs/CLaSH-Tutorial.html
 - Haskell reference -> http://cheatsheet.codeslower.com/CheatSheet.pdf
 - Lens reference -> https://github.com/ekmett/lens/wiki/Operators
+- Boolean Blindness reference -> http://degoes.net/articles/destroy-all-ifs
 - https://www.schoolofhaskell.com/school/starting-with-haskell/introduction-to-haskell/5-type-classes
 
 
