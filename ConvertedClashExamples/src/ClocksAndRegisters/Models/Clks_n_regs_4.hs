@@ -56,9 +56,9 @@ convertBool value sigValue = status <$> isRising value sigValue
     status rising = if rising then IsRising else NotRising
 
 onTrue :: St -> PIn -> SignalStatus -> St
-onTrue St{..} PIn{_reset = True} _         = resetSTWithCount _count
-onTrue st _                      NotRising = st
-onTrue st@St{..} PIn {..}        IsRising  = st & (risingState.stateChanges)
+onTrue St{..}    PIn{_reset = True} _         = resetSTWithCount _count
+onTrue st        _                  NotRising = st
+onTrue st@St{..} PIn {..}           IsRising  = st & (risingState.stateChanges)
   where
     stateChanges
       | _start                            = cntEnTrue
