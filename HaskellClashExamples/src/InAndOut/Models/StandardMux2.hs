@@ -1,0 +1,50 @@
+{-# LANGUAGE DataKinds        #-}
+{-# LANGUAGE RecordWildCards  #-}
+{-# LANGUAGE TemplateHaskell  #-}
+{-# LANGUAGE NoImplicitPrelude  #-}
+
+module InAndOut.Models.StandardMux2 where
+
+import CLaSH.Prelude
+import Control.Lens hiding ((:>))
+import Control.Monad.Trans.State
+
+import SAFE.TestingTools
+import SAFE.CommonClash
+
+import Text.PrettyPrint.HughesPJClass
+
+--inputs
+data PIn = PIn { _in1 :: BitVector 4
+               , _in2 :: BitVector 4
+               , _in3 :: Bit
+               } deriving (Eq, Show)
+instance PortIn PIn
+instance Pretty PIn where
+  pPrint PIn {..} = text "PIn:"
+                $+$ text "_in1 =" <+> showT _in1
+                $+$ text "_in2 =" <+> showT _in2
+                $+$ text "_in3 =" <+> showT _in3
+--Outputs and state data
+data St = St { _out1 :: BitVector 4
+             } deriving (Eq, Show)
+makeLenses ''St
+instance SysState St
+instance Pretty St where
+ pPrint St {..} = text "St"
+              $+$ text "_out1 =" <+> showT _out1
+
+procSimple :: St -> PIn -> St
+procSimple st@St{..} PIn{..} = st
+                             & (out1 .~ if bit2Bool _in3 then _in2
+                                         else _in1)
+
+topEntity :: Signal PIn -> Signal St
+topEntity = topEntity' st
+  where
+    st = St 0
+
+topEntity' :: St ->  Signal PIn -> Signal St--Signal st
+topEntity' st pin = reg
+  where
+    reg = register st $ procSimple <$> reg <*> pin
