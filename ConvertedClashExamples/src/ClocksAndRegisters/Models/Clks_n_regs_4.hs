@@ -45,18 +45,15 @@ instance Pretty St where
               $+$ text "_stopD1 ="  <+>  showT _stopD1
               $+$ text "_stopD2 ="  <+>  showT _stopD2
               $+$ text "_count ="    <+>  showT _count
-resetSTKeepCount :: BitVector 4 -> St
-resetSTKeepCount = St False 0 False False
+resetSTWithCount :: BitVector 4 -> St
+resetSTWithCount = St False 0 False False
 --------------------------------------------------------------------------------
 data SignalStatus = IsRising | NotRising
 
 convertBool :: (Bounded a, Eq a) => a -> Signal a -> Signal SignalStatus
 convertBool value sigValue = status <$> isRising value sigValue
   where
-    status sig = if sig then IsRising else NotRising
-
-fExecState :: c -> State c a -> c
-fExecState = flip execState
+    status rising = if rising then IsRising else NotRising
 
 onTrue :: St -> PIn -> SignalStatus -> St
 onTrue St{..} PIn{_reset = True} _         = resetSTWithCount _count
@@ -69,14 +66,13 @@ onTrue st@St{..} PIn {..}        IsRising  = st & (risingState.stateChanges)
     resetCount  = countUs .~ 0
     incCount    = countUs +~ 1
     stateChanges
-      | _start == True                                           = cntEnTrue
-      | _cntEn == False && _stop    == True                      = cntEnFalse
-      | _cntEn == True  && _countUs == 13     && _stop  == True  = cntEnFalse . resetCount
-      | _cntEn == True  && _countUs == 13     && _stop  == False = resetCount
-      | _cntEn == True  && _stop    == True                      = cntEnFalse . incCount
-      | _cntEn == True  && _stop    == False                     = incCount
-      | otherwise                                                = id
-
+      | _start                            = cntEnTrue
+      | _cntEn && _stop                   = cntEnFalse
+      | _cntEn && _countUs == 13 && _stop = cntEnFalse . resetCount
+      | _cntEn && _countUs == 13 && _stop = resetCount
+      | _cntEn && _stop                   = cntEnFalse . incCount
+      | _cntEn && _stop                   = incCount
+      | otherwise                         = id
 
 --------------------------------------------------------------------------------
 
@@ -103,5 +99,5 @@ topEntity' :: St ->  Signal PIn -> Signal St--Signal st
 topEntity' st pin = result
   where
     result = register st (onTrue <$> result <*> pin <*> rising )
-    rising = isRising 0 clk
+    rising = convertBool 0 clk
     clk = _clk <$> pin

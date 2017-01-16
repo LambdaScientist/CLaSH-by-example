@@ -1,4 +1,4 @@
--- import ClocksAndRegisters.TestClks_n_regs_4
+import ClocksAndRegisters.TestClks_n_regs_4
 -- import ClocksAndRegisters.TestClks_n_regs_5
 -- import ClocksAndRegisters.TestDflop_en_clr
 -- import ClocksAndRegisters.TestDflop_sync_enable
@@ -33,7 +33,7 @@
 -- import StateMachines.Models.StateMachine2
 
 -- import ModularDesign.TestModular1
-import ModularDesign.TestModular2
+-- import ModularDesign.TestModular2
 -- import ModularDesign.Models.Modular1
 -- import ModularDesign.Models.Modular2
 -- import ModularDesign.Models.StateMachine
