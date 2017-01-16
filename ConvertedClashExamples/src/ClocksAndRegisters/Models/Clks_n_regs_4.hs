@@ -60,11 +60,6 @@ onTrue St{..} PIn{_reset = True} _         = resetSTWithCount _count
 onTrue st _                      NotRising = st
 onTrue st@St{..} PIn {..}        IsRising  = st & (risingState.stateChanges)
   where
-    risingState = (stopD1 .~ _stop) . (stopD2 .~ _stopD1)
-    cntEnFalse  = cntEn   .~ False
-    cntEnTrue   = cntEn   .~ True
-    resetCount  = countUs .~ 0
-    incCount    = countUs +~ 1
     stateChanges
       | _start                            = cntEnTrue
       | _cntEn && _stop                   = cntEnFalse
@@ -73,6 +68,11 @@ onTrue st@St{..} PIn {..}        IsRising  = st & (risingState.stateChanges)
       | _cntEn && _stop                   = cntEnFalse . incCount
       | _cntEn && _stop                   = incCount
       | otherwise                         = id
+    risingState = (stopD1 .~ _stop) . (stopD2 .~ _stopD1)
+    cntEnFalse  = cntEn   .~ False
+    cntEnTrue   = cntEn   .~ True
+    resetCount  = countUs .~ 0
+    incCount    = countUs +~ 1
 
 --------------------------------------------------------------------------------
 
