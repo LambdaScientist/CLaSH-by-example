@@ -15,20 +15,19 @@ import Text.PrettyPrint.HughesPJClass
 configurationList :: [Config]
 configurationList = [configOne, configTwo, configThree, configFour]
   where
-    startSt    = St CounterDisabled 0 StopDisabled StopDisabled 0
+    startSt    = St False 0 False False 0
 
-    inputOne = PIn 0 ResetDisabled StartDisabled StopDisabled
+    inputOne = PIn 0 False False False
     configOne = Config inputOne startSt
 
-    inputTwo  = PIn 0 ResetDisabled StartDisabled StopDisabled
+    inputTwo  = PIn 0 False False False
     configTwo = Config inputTwo startSt
 
-    inputThree  = PIn 0 ResetDisabled StartDisabled StopDisabled
+    inputThree  = PIn 0 False False False
     configThree = Config inputThree startSt
 
-    inputFour  = PIn 0 ResetDisabled StartDisabled StopDisabled
+    inputFour  = PIn 0 False False False
     configFour = Config inputFour startSt
-
 ---TESTING
 
 
