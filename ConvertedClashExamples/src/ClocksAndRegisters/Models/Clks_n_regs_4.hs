@@ -47,10 +47,42 @@ instance Pretty St where
               $+$ text "_count ="    <+>  showT _count
 resetSTKeepCount :: BitVector 4 -> St
 resetSTKeepCount = St False 0 False False
+--------------------------------------------------------------------------------
+data SignalStatus = IsRising | NotRising
 
-onTrue :: St -> PIn -> Bool -> St
-onTrue st@St{..} PIn{..} risingEdge = flip execState st $
-  if _reset then put $ resetSTKeepCount _count
+convertBool :: (Bounded a, Eq a) => a -> Signal a -> Signal SignalStatus
+convertBool value sigValue = status <$> isRising value sigValue
+  where
+    status sig = if sig then IsRising else NotRising
+
+fExecState :: c -> State c a -> c
+fExecState = flip execState
+
+onTrue :: St -> PIn -> SignalStatus -> St
+onTrue St{..} PIn{_reset = True} _         = resetSTWithCount _count
+onTrue st _                      NotRising = st
+onTrue st@St{..} PIn {..}        IsRising  = st & (risingState.stateChanges)
+  where
+    risingState = (stopD1 .~ _stop) . (stopD2 .~ _stopD1)
+    cntEnFalse  = cntEn   .~ False
+    cntEnTrue   = cntEn   .~ True
+    resetCount  = countUs .~ 0
+    incCount    = countUs +~ 1
+    stateChanges
+      | _start == True                                           = cntEnTrue
+      | _cntEn == False && _stop    == True                      = cntEnFalse
+      | _cntEn == True  && _countUs == 13     && _stop  == True  = cntEnFalse . resetCount
+      | _cntEn == True  && _countUs == 13     && _stop  == False = resetCount
+      | _cntEn == True  && _stop    == True                      = cntEnFalse . incCount
+      | _cntEn == True  && _stop    == False                     = incCount
+      | otherwise                                                = id
+
+
+--------------------------------------------------------------------------------
+
+onTrue' :: St -> PIn -> Bool -> St
+onTrue' st@St{..} PIn{..} risingEdge = flip execState st $
+  if _reset then put $ resetSTWithCount _count
   else
     when risingEdge $ do
       --SR Flop
