@@ -4,7 +4,7 @@ import ClocksAndRegisters.TestClks_n_regs_4
 -- import ClocksAndRegisters.TestDflop_sync_enable
 -- import ClocksAndRegisters.TestSimpleDFlop
 -- import ClocksAndRegisters.TestSimpleDFlopWithReset
--- import ClocksAndRegisters.Models.Clks_n_regs_4
+import qualified ClocksAndRegisters.Models.Clks_n_regs_4 as CR
 -- import ClocksAndRegisters.Models.Clks_n_regs_5
 -- import ClocksAndRegisters.Models.Dflop_en_clr
 -- import ClocksAndRegisters.Models.Dflop_sync_enable
@@ -42,3 +42,6 @@ import Prelude
 
 
 main = print ppSetupAndRun
+
+
+topEntity = CR.topEntity
