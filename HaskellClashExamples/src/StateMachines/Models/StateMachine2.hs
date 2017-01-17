@@ -20,13 +20,6 @@ data PIn = PIn { _clk   :: Bit
                , _go    :: Bool
                , _kill  :: Bool
                } deriving (Eq, Show)
-instance PortIn PIn
-instance Pretty PIn where
-  pPrint PIn {..} = text "PIn:"
-                $+$ text "_clk ="   <+> showT _clk
-                $+$ text "_reset =" <+> showT _reset
-                $+$ text "_go ="    <+> showT _go
-                $+$ text "_kill ="  <+> showT _kill
 
 --Outputs and state data
 data StateLabel = Idle | Active | Finish | Abort deriving (Show, Eq)
@@ -36,12 +29,6 @@ data St = St { _state_reg :: StateLabel
              , _done      :: Bool
              } deriving (Eq, Show)
 makeLenses ''St
-instance SysState St
-instance Pretty St where
-  pPrint St {..} = text "St:"
-               $+$ text "_state_reg =" <+> showT _state_reg
-               $+$ text "_count ="     <+> showT _count
-               $+$ text "_done ="      <+> showT _done
 
 reset :: St
 reset = St Idle 0 False
@@ -80,6 +67,18 @@ topEntity' st pin = result
     clk = _clk <$> pin
 
 
+--- The following code is only for a custom testing framework, and PrettyPrinted  output
+instance PortIn PIn
+instance Pretty PIn where
+  pPrint PIn {..} = text "PIn:"
+                $+$ text "_clk ="   <+> showT _clk
+                $+$ text "_reset =" <+> showT _reset
+                $+$ text "_go ="    <+> showT _go
+                $+$ text "_kill ="  <+> showT _kill
 
---
----TESTING
+instance SysState St
+instance Pretty St where
+  pPrint St {..} = text "St:"
+               $+$ text "_state_reg =" <+> showT _state_reg
+               $+$ text "_count ="     <+> showT _count
+               $+$ text "_done ="      <+> showT _done
