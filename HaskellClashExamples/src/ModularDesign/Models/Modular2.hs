@@ -33,8 +33,8 @@ data MPIn = MPIn { _clk'     :: Bit
 --Outputs and state data
 data StateLabel = Idle | Active | Finish | Abort deriving (Show, Eq)
 
-data St = St { _state_reg :: SM.StateLabel
-             , _count     :: BitVector 8
+data St = St { _state_reg  :: SM.StateLabel
+             , _count      :: BitVector 8
              , _done1      :: Bool
              , _done2      :: Bool
              , _done3      :: Bool
