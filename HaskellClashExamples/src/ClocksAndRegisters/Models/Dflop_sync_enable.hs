@@ -14,6 +14,7 @@ import Text.PrettyPrint.HughesPJClass
 import SAFE.TestingTools
 import SAFE.CommonClash
 
+data SignalStatus  = IsRising | NotRising deriving (Eq, Show)
 data ActiveStatus  = Enabled | Disabled deriving (Eq, Show)
 data ResetStatus   = ResetEnabled | ResetDisabled deriving (Eq, Show)
 data ClearStatus   = ClearEnabled | ClearDisabled deriving (Eq, Show)
@@ -31,13 +32,17 @@ data St = St { _out1 :: Bit
              } deriving (Eq, Show)
 makeLenses ''St
 
-onTrue :: St -> PIn -> Bool -> St
-onTrue st PIn{..} edgeDetect = shouldReset
+getSignalStatus :: (Bounded a, Eq a) => a -> Signal a -> Signal SignalStatus
+getSignalStatus value sigValue = status <$> isRising value sigValue
   where
-    shouldReset = if _reset then St 0 else risingEdge
-    risingEdge = if edgeDetect then enabled else st
-    enabled = if _enable then shouldClear  else st
-    shouldClear = if _clearN then St 0 else st{ _out1 = _in1 }
+    status rising = if rising then IsRising else NotRising
+
+onTrue :: St -> PIn -> SignalStatus -> St
+onTrue st PIn{_reset = ResetEnabled} _ = St 0
+onTrue st PIn{_enable = Enabled, _clearN = ClearEnabled} IsRising = St 0
+onTrue st PIn{_enable = Enabled, _in1 = input1} IsRising = st{ _out1 = input1 }
+onTrue st _ _ = st
+
 
 topEntity :: Signal PIn -> Signal St
 topEntity = topEntity' st
@@ -48,14 +53,14 @@ topEntity' :: St -> Signal PIn -> Signal St
 topEntity' st pin = result
   where
     result = register st (onTrue <$> result <*> pin <*> rising )
-    rising = isRising 0 clk
+    rising = getSignalStatus 0 clk
     clk = _clk <$> pin
 
 --- The following code is only for a custom testing framework, and PrettyPrinted  output
 instance SysState St
 instance Pretty St where
- pPrint St {..} = text "St"
-              $+$ text "_out1 ="   <+>  showT _out1
+  pPrint St {..} = text "St"
+               $+$ text "_out1 ="   <+>  showT _out1
 
 instance PortIn PIn
 instance Pretty PIn where

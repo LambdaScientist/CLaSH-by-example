@@ -14,20 +14,28 @@ import Text.PrettyPrint.HughesPJClass
 import SAFE.TestingTools
 import SAFE.CommonClash
 
+data SignalStatus  = IsRising | NotRising deriving (Eq, Show)
+data ResetStatus   = ResetEnabled | ResetDisabled deriving (Eq, Show)
+
 --inputs
-data PIn = PIn { _in1 :: Bit
-               , _clk  :: Bit
-               , _reset :: Bool
+data PIn = PIn { _in1   :: Bit
+               , _clk   :: Bit
+               , _reset :: ResetStatus
                } deriving (Eq, Show)
 
 data St = St { _out1 :: Bit
              } deriving (Eq, Show)
 makeLenses ''St
 
-onTrue :: St -> PIn -> Bool -> St
-onTrue st PIn{..} condition = if _reset then St 0 else doinstead
+onTrue :: St -> PIn -> SignalStatus -> St
+onTrue st PIn{_reset = ResetEnabled} _ = St 0
+onTrue st PIn{_in1 = input1} IsRising = st{ _out1 = input1 }
+onTrue st _ _ = st
+
+getSignalStatus :: (Bounded a, Eq a) => a -> Signal a -> Signal SignalStatus
+getSignalStatus value sigValue = status <$> isRising value sigValue
   where
-    doinstead = if condition then st{ _out1 = _in1 } else st
+    status rising = if rising then IsRising else NotRising
 
 topEntity :: Signal PIn -> Signal St
 topEntity = topEntity' startSt
@@ -38,7 +46,7 @@ topEntity' :: St -> Signal PIn -> Signal St
 topEntity' st pin = result
   where
     result = register st (onTrue <$> result <*> pin <*> rising )
-    rising = isRising 0 clk
+    rising = getSignalStatus 0 clk
     clk = _clk <$> pin
 
 

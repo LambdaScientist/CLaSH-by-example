@@ -38,8 +38,8 @@ onTrue st PIn{_clearN = ClearDisabled} IsRising = st & out1 .~ 0
 onTrue st PIn{_enable = Disabled, _in1 = input1} IsRising = st & out1 .~ input1
 onTrue st _ _ = st
 
-convertBool :: (Bounded a, Eq a) => a -> Signal a -> Signal SignalStatus
-convertBool value sigValue = status <$> isRising value sigValue
+getSignalStatus :: (Bounded a, Eq a) => a -> Signal a -> Signal SignalStatus
+getSignalStatus value sigValue = status <$> isRising value sigValue
   where
     status rising = if rising then IsRising else NotRising
 
@@ -52,7 +52,7 @@ topEntity' :: St -> Signal PIn -> Signal St
 topEntity' st pin = result
   where
     result = register st (onTrue <$> result <*> pin <*> rising )
-    rising = convertBool 0 clk
+    rising = getSignalStatus 0 clk
     clk = _clk <$> pin
 
 

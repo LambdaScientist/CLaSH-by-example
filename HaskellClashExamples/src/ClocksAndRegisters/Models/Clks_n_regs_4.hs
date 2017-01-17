@@ -42,8 +42,8 @@ makeLenses ''St
 resetSTWithCount :: BitVector 4 -> St
 resetSTWithCount = St CounterDisabled 0 StopDisabled StopDisabled
 
-convertBool :: (Bounded a, Eq a) => a -> Signal a -> Signal SignalStatus
-convertBool value sigValue = status <$> isRising value sigValue
+getSignalStatus :: (Bounded a, Eq a) => a -> Signal a -> Signal SignalStatus
+getSignalStatus value sigValue = status <$> isRising value sigValue
   where
     status rising = if rising then IsRising else NotRising
 
@@ -81,7 +81,7 @@ topEntity' :: St ->  Signal PIn -> Signal St--Signal st
 topEntity' st pin = result
   where
     result = register st (onTrue <$> result <*> pin <*> rising )
-    rising = convertBool 0 clk
+    rising = getSignalStatus 0 clk
     clk = _clk <$> pin
 
 

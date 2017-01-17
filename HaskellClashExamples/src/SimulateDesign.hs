@@ -5,6 +5,11 @@
 -- import ClocksAndRegisters.TestDflop_en_clr
 -- import ClocksAndRegisters.Models.Dflop_en_clr
 
+-- import ClocksAndRegisters.TestDflop_sync_enable
+-- import ClocksAndRegisters.Models.Dflop_sync_enable
+
+-- import ClocksAndRegisters.TestSimpleDFlop
+-- import ClocksAndRegisters.Models.SimpleDFlop
 
 
 -------------- DEAD ------------------------------------------------------------
@@ -14,12 +19,7 @@
 
 -------------- END DEAD --------------------------------------------------------
 
-import ClocksAndRegisters.TestDflop_sync_enable
--- import ClocksAndRegisters.Models.Dflop_sync_enable
-
--- import ClocksAndRegisters.TestSimpleDFlop
--- import ClocksAndRegisters.TestSimpleDFlopWithReset
--- import ClocksAndRegisters.Models.SimpleDFlop
+import ClocksAndRegisters.TestSimpleDFlopWithReset
 -- import ClocksAndRegisters.Models.SimpleDFlopWithReset
 
 -- import InAndOut.TestBusBreakout

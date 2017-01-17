@@ -17,16 +17,16 @@ configurationList = [configOne, configTwo, configThree, configFour]
   where
     startSt    = St 0
 
-    inputOne  = PIn 0 0 False
+    inputOne  = PIn 0 0 ResetDisabled
     configOne = Config inputOne startSt
 
-    inputTwo  = PIn 0 0 False
+    inputTwo  = PIn 0 0 ResetDisabled
     configTwo = Config inputTwo startSt
 
-    inputThree  = PIn 0 0 False
+    inputThree  = PIn 0 0 ResetDisabled
     configThree = Config inputThree startSt
 
-    inputFour  = PIn 0 0 False
+    inputFour  = PIn 0 0 ResetDisabled
     configFour = Config inputFour startSt
 
 ---TESTING

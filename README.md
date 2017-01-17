@@ -51,3 +51,6 @@ Language Extensions:
 - DataKinds
   * Allows us to use type constructors as types (e.g. BitVector 4)
   * http://dev.stephendiehl.com/hask/#data-kinds
+- DataKinds
+  * DefaultSignatures extension to allow the user to leave typeclass functions blank and defer to Generic or to define their own.
+  * http://dev.stephendiehl.com/hask/#generic

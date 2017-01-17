@@ -17,23 +17,18 @@ configurationList = [configOne, configTwo, configThree, configFour]
   where
     startSt    = St 0
 
-    inputOne  = PIn 0 0 False False False
+    inputOne  = PIn 0 0 ResetDisabled Disabled ClearDisabled
     configOne = Config inputOne startSt
 
-    inputTwo  = PIn 0 0 False False False
+    inputTwo  = PIn 0 0 ResetDisabled Disabled ClearDisabled
     configTwo = Config inputTwo startSt
 
-    inputThree  = PIn 0 0 False False False
+    inputThree  = PIn 0 0 ResetDisabled Disabled ClearDisabled
     configThree = Config inputThree startSt
 
-    inputFour  = PIn 0 0 False False False
+    inputFour  = PIn 0 0 ResetDisabled Disabled ClearDisabled
     configFour = Config inputFour startSt
 
----TESTING
-
--- Move these when I seperate the files
-
-----------------------------------------
 
 data Config = Config { input  :: PIn
                      , startSt :: St
