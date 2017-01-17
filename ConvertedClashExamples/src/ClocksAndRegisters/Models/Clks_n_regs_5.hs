@@ -22,13 +22,6 @@ data PIn = PIn { _clk    :: Bit
                , _start  :: Bool
                , _stop   :: Bool
                } deriving (Eq, Show)
-instance PortIn PIn
-instance Pretty PIn where
-  pPrint PIn {..} = text "PIn:"
-                $+$ text "_clk ="   <+> showT _clk
-                $+$ text "_reset =" <+> showT _reset
-                $+$ text "_start =" <+> showT _start
-                $+$ text "_stop ="  <+> showT _stop
 
 --Outputs and state data
 data St = St { _cntEn   :: Bool
@@ -38,14 +31,6 @@ data St = St { _cntEn   :: Bool
              , _count    :: BitVector 4
              } deriving (Eq, Show)
 makeLenses ''St
-instance SysState St
-instance Pretty St where
- pPrint St {..} = text "St"
-              $+$ text "_cntEn ="   <+>  showT _cntEn
-              $+$ text "_countUs =" <+>  showT _countUs
-              $+$ text "_stopD1 ="  <+>  showT _stopD1
-              $+$ text "_stopD2 ="  <+>  showT _stopD2
-              $+$ text "_count ="   <+>  showT _count
 
 resetSTKeepCount :: BitVector 4 -> St
 resetSTKeepCount = St False 0 False False
@@ -77,4 +62,23 @@ topEntity' st pin = result
     rising = isRising 0 clk
     clk = _clk <$> pin
 
----TESTING
+
+--- The following code is only for a custom testing framework, and PrettyPrinted  output
+
+instance PortIn PIn
+instance Pretty PIn where
+  pPrint PIn {..} = text "PIn:"
+                $+$ text "_clk ="   <+> showT _clk
+                $+$ text "_reset =" <+> showT _reset
+                $+$ text "_start =" <+> showT _start
+                $+$ text "_stop ="  <+> showT _stop
+
+
+instance SysState St
+instance Pretty St where
+  pPrint St {..} = text "St"
+               $+$ text "_cntEn ="   <+>  showT _cntEn
+               $+$ text "_countUs =" <+>  showT _countUs
+               $+$ text "_stopD1 ="  <+>  showT _stopD1
+               $+$ text "_stopD2 ="  <+>  showT _stopD2
+               $+$ text "_count ="   <+>  showT _count

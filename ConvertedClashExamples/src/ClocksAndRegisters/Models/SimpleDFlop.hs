@@ -14,25 +14,14 @@ import Text.PrettyPrint.HughesPJClass
 import SAFE.TestingTools
 import SAFE.CommonClash
 
-----------------------------------------------------------------
-
 --inputs
 data PIn = PIn { _in1 :: Bit
                , _clk  :: Bit
                } deriving (Eq, Show)
-instance PortIn PIn
-instance Pretty PIn where
-  pPrint PIn {..} = text "PIn:"
-                $+$ text "_in1 =" <+> showT _in1
-                $+$ text "_clk ="  <+> showT _clk
 
 data St = St { _out1 :: Bit
              } deriving (Eq, Show)
 makeLenses ''St
-instance SysState St
-instance Pretty St where
- pPrint St {..} = text "St"
-              $+$ text "_out1 =" <+> showT _out1
 
 onTrue :: St -> PIn -> Bool -> St
 onTrue st PIn{..} condition = if condition then st{ _out1 = _in1 } else st
@@ -49,4 +38,16 @@ topEntity' st pin = result
     rising = isRising 0 clk
     clk = _clk <$> pin
 
----TESTING
+
+--- The following code is only for a custom testing framework, and PrettyPrinted  output
+
+instance PortIn PIn
+instance Pretty PIn where
+  pPrint PIn {..} = text "PIn:"
+                $+$ text "_in1 =" <+> showT _in1
+                $+$ text "_clk ="  <+> showT _clk
+
+instance SysState St
+instance Pretty St where
+ pPrint St {..} = text "St"
+              $+$ text "_out1 =" <+> showT _out1
