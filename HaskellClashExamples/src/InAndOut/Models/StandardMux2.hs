@@ -14,6 +14,7 @@ import SAFE.CommonClash
 
 import Text.PrettyPrint.HughesPJClass
 
+
 --inputs
 data PIn = PIn { _in1 :: BitVector 4
                , _in2 :: BitVector 4

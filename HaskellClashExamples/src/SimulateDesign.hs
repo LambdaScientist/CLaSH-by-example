@@ -11,6 +11,26 @@
 -- import ClocksAndRegisters.TestSimpleDFlop
 -- import ClocksAndRegisters.Models.SimpleDFlop
 
+-- import ClocksAndRegisters.TestSimpleDFlopWithReset
+-- import ClocksAndRegisters.Models.SimpleDFlopWithReset
+
+-- import InAndOut.TestBusBreakout
+-- import InAndOut.Models.BusBreakout
+
+-- import InAndOut.TestBusSignals
+-- import InAndOut.Models.BusSignals
+
+-- import InAndOut.TestIntermediateSignal
+-- import InAndOut.Models.IntermediateSignal
+
+-- import InAndOut.TestSimpleInOut
+-- import InAndOut.Models.SimpleInOut
+
+import InAndOut.TestStandardMux1
+-- import InAndOut.Models.StandardMux1
+
+-- import InAndOut.TestStandardMux2
+-- import InAndOut.Models.StandardMux2
 
 -------------- DEAD ------------------------------------------------------------
 --These died because VHDL variables are not very sensible
@@ -19,34 +39,22 @@
 
 -------------- END DEAD --------------------------------------------------------
 
-import ClocksAndRegisters.TestSimpleDFlopWithReset
--- import ClocksAndRegisters.Models.SimpleDFlopWithReset
-
--- import InAndOut.TestBusBreakout
--- import InAndOut.TestIntermediateSignal
--- import InAndOut.TestBusSignals
--- import InAndOut.TestSimpleInOut
--- import InAndOut.TestStandardMux1
--- import InAndOut.TestStandardMux2
--- import InAndOut.Models.BusBreakout
--- import InAndOut.Models.BusSignals
--- import InAndOut.Models.IntermediateSignal
--- import InAndOut.Models.SimpleInOut
--- import InAndOut.Models.StandardMux1
--- import InAndOut.Models.StandardMux2
 
 -- import SAFE.CommonClash
 -- import SAFE.TestingTools
 
 -- import StateMachines.TestStateMachine
--- import StateMachines.TestStateMachine2
 -- import StateMachines.Models.StateMachine
+
+-- import StateMachines.TestStateMachine2
 -- import StateMachines.Models.StateMachine2
 
 -- import ModularDesign.TestModular1
--- import ModularDesign.TestModular2
 -- import ModularDesign.Models.Modular1
+
 -- import ModularDesign.Models.Modular2
+-- import ModularDesign.TestModular2
+
 -- import ModularDesign.Models.StateMachine
 
 import Prelude

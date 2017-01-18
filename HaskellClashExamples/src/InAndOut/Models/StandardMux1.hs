@@ -14,10 +14,12 @@ import SAFE.CommonClash
 
 import Text.PrettyPrint.HughesPJClass
 
+data MultiPlexerChoice  = ChooseLeft | ChooseRight deriving (Eq, Show)
+
 --inputs
 data PIn = PIn { _in1 :: BitVector 4
                , _in2 :: BitVector 4
-               , _in3 :: Bit
+               , _in3 :: MultiPlexerChoice
                } deriving (Eq, Show)
 
 --Outputs and state data
@@ -28,9 +30,9 @@ makeLenses ''St
 procSimple :: St -> PIn -> St
 procSimple st@St{..} PIn{..} = st & (out1 .~ multiPlex _in3 _in1 _in2)
 
-multiPlex :: Bit -> BitVector 4 -> BitVector 4 -> BitVector 4
-multiPlex 1 _ y = y
-multiPlex 0 x _ = x
+multiPlex :: MultiPlexerChoice -> BitVector 4 -> BitVector 4 -> BitVector 4
+multiPlex ChooseRight _ y = y
+multiPlex ChooseLeft x _ = x
 multiPlex _ _ _ = 0
 
 topEntity :: Signal PIn -> Signal St

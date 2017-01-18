@@ -27,10 +27,12 @@ data St = St { _out1 :: Bit
 makeLenses ''St
 
 procSimple :: St -> PIn -> St
-procSimple st@St{..} PIn{..} = flip execState st $ do
-  out1 .= ( intermediate_sig .&. _in3)
-  out2 .= ( intermediate_sig .|. _in3)
+procSimple st@St{..} PIn{..} = st & setOutput1.setOutput2
   where
+    setOutput1 = out1 .~ newOut1
+    newOut1    = intermediate_sig .&. _in3
+    setOutput2 = out2 .~ newOut2
+    newOut2    = intermediate_sig .|. _in3
     intermediate_sig = _in1 .&. _in2
 
 topEntity :: Signal PIn -> Signal St

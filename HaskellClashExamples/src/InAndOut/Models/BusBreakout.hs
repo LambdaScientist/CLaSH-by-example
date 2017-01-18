@@ -14,6 +14,7 @@ import SAFE.CommonClash
 
 import Text.PrettyPrint.HughesPJClass
 
+
 --inputs
 data PIn = PIn { _in1 :: BitVector 4
                , _in2 :: BitVector 4
@@ -26,8 +27,7 @@ data St = St { _out1 :: BitVector 6
 makeLenses ''St
 
 procSimple :: St -> PIn -> St
-procSimple st@St{..} PIn{..} = flip execState st $
-  out1 .= (p1 ++# p2 ++# p3 ++# p4)
+procSimple st@St{..} PIn{..} = st & out1 .~ (p1 ++# p2 ++# p3 ++# p4)
   where
     p1 = slice d3 d2 _in2
     p2 = _in1 ! 3 .&. _in2 ! 1

@@ -26,8 +26,7 @@ data St = St { _out1 :: BitVector 4
 makeLenses ''St
 
 procSimple :: St -> PIn -> St
-procSimple st@St{..} PIn{..} = flip execState st $
-  out1 .= keepValue (bnot _in3) _in1 .|. keepValue _in3 _in2
+procSimple st@St{..} PIn{..} = st & out1 .~ keepValue (bnot _in3) _in1 .|. keepValue _in3 _in2
   where
     keepValue keepDecider =  v2bv.map (.&. keepDecider).bv2v
 
