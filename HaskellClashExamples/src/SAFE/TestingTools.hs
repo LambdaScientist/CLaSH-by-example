@@ -2,12 +2,20 @@
 {-# LANGUAGE RankNTypes  #-}
 {-# LANGUAGE ExistentialQuantification  #-}
 
+
+{-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DeriveAnyClass #-}
+
+
 module SAFE.TestingTools where
 
 import qualified Prelude as P
 import CLaSH.Prelude
 
 import Text.PrettyPrint.HughesPJClass
+
+import GHC.Generics (Generic)
+import Control.DeepSeq
 
 --------------------------------------------------------------------------------
 -- Abstract Area
@@ -16,18 +24,20 @@ class (Eq pin, Pretty pin) => PortIn pin
 
 class (Eq st, Pretty st) => SysState st
 
-class (Pretty trans) => Transition trans where
+class (Pretty trans, NFData trans) => Transition trans where
   runOneTest :: forall st
-              . (SysState st)
+              . (SysState st, NFData st)
              => trans
              -> (trans -> Signal st)
              -> Signal TestResult
 
 data TestResult = forall st trans
-                . (Transition trans, Pretty st, SysState st, Pretty trans)
+                . (Transition trans, Pretty st, SysState st, Pretty trans, NFData st, NFData trans)
                => TestResult { initConfig :: trans
                              , endSt      :: st
                              }
+instance NFData TestResult where
+  rnf a = seq a ()
 instance Pretty TestResult where
   pPrint TestResult {..} = text "TestResult:"
                        $+$ text "initConfig ="
@@ -36,7 +46,7 @@ instance Pretty TestResult where
 
 -----This will be used if no changes are needed -------------------------------
 runOneTest' :: forall st trans
-             . (SysState st, Pretty st, Transition trans)
+             . (SysState st, Pretty st, Transition trans, NFData st, NFData trans)
             => trans
             -> (trans -> Signal st)
             -> Signal TestResult
@@ -48,7 +58,7 @@ runOneTest' config topEntity' = TestResult config <$> result
 --Testing Functions
 --------------------------------------------------------------------------------
 getTestResult :: forall st trans
-              . (SysState st, Transition trans)
+              . (SysState st, Transition trans, NFData st, NFData trans)
               => Bool
               -> Int
               -> trans
@@ -61,14 +71,14 @@ getTestResult getTail howManyResults config topEntity'= (conTail.sampleN howMany
     testR = test config topEntity'
 
 runConfigList :: forall st trans
-               . (SysState st, Transition trans)
+               . (SysState st, Transition trans, NFData st, NFData trans)
               => (trans -> Signal st)
               -> [trans]
               -> [[TestResult]]
 runConfigList = runConfigList' True 2
 
 runConfigList' :: forall st trans
-                . (SysState st, Transition trans)
+                . (SysState st, Transition trans, NFData st, NFData trans)
                => Bool
                -> Int
                -> (trans -> Signal st)

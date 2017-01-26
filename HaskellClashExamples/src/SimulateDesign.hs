@@ -26,11 +26,14 @@
 -- import InAndOut.TestSimpleInOut
 -- import InAndOut.Models.SimpleInOut
 
-import InAndOut.TestStandardMux1
+-- import InAndOut.TestStandardMux1
 -- import InAndOut.Models.StandardMux1
 
 -- import InAndOut.TestStandardMux2
 -- import InAndOut.Models.StandardMux2
+
+-- import StateMachines.TestStateMachine
+-- import StateMachines.Models.StateMachine
 
 -------------- DEAD ------------------------------------------------------------
 --These died because VHDL variables are not very sensible
@@ -40,13 +43,8 @@ import InAndOut.TestStandardMux1
 -------------- END DEAD --------------------------------------------------------
 
 
--- import SAFE.CommonClash
--- import SAFE.TestingTools
 
--- import StateMachines.TestStateMachine
--- import StateMachines.Models.StateMachine
-
--- import StateMachines.TestStateMachine2
+import StateMachines.TestStateMachine2
 -- import StateMachines.Models.StateMachine2
 
 -- import ModularDesign.TestModular1
@@ -57,10 +55,21 @@ import InAndOut.TestStandardMux1
 
 -- import ModularDesign.Models.StateMachine
 
+-- import SAFE.CommonClash
+-- import SAFE.TestingTools
+
 import Prelude
 
 
-main = print ppSetupAndRun
-
+-- main = print ppSetupAndRun
 
 -- topEntity = CR.topEntity
+
+--
+--
+
+
+-- IO stuff
+-- print A;
+-- print B;
+-- print C;

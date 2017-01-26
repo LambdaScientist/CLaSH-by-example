@@ -12,21 +12,24 @@ import StateMachines.Models.StateMachine
 
 import Text.PrettyPrint.HughesPJClass
 
+import Control.DeepSeq
+import GHC.Generics (Generic)
+
 configurationList :: [Config]
 configurationList = [configOne, configTwo, configThree, configFour]
   where
-    startSt = St Idle 0 False
+    startSt = St Idle 0 NotDone
 
-    inputOne  = PIn 1 False False False
+    inputOne  = PIn 1 ResetEnabled DontGo Terminate
     configOne = Config inputOne startSt
 
-    inputTwo  = PIn 1 False False False
+    inputTwo  = PIn 1 ResetEnabled DontGo Terminate
     configTwo = Config inputTwo startSt
 
-    inputThree  = PIn 1 False False False
+    inputThree  = PIn 1 ResetEnabled DontGo Terminate
     configThree = Config inputThree startSt
 
-    inputFour  = PIn 1 False False False
+    inputFour  = PIn 1 ResetEnabled DontGo Terminate
     configFour = Config inputFour startSt
 
 ---TESTING
@@ -37,6 +40,8 @@ configurationList = [configOne, configTwo, configThree, configFour]
 data Config = Config { input  :: PIn
                      , startSt :: St
                      }deriving(Eq,Show)
+instance NFData Config where
+  rnf a = seq a ()
 instance Pretty Config where
  pPrint Config{..} = text "Config:"
                  $+$ text "input ="   <+> pPrint input

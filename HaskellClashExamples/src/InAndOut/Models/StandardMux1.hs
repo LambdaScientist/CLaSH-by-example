@@ -32,7 +32,7 @@ procSimple st@St{..} PIn{..} = st & (out1 .~ multiPlex _in3 _in1 _in2)
 
 multiPlex :: MultiPlexerChoice -> BitVector 4 -> BitVector 4 -> BitVector 4
 multiPlex ChooseRight _ y = y
-multiPlex ChooseLeft x _ = x
+multiPlex ChooseLeft  x _ = x
 multiPlex _ _ _ = 0
 
 topEntity :: Signal PIn -> Signal St
