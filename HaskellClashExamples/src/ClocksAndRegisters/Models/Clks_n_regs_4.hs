@@ -3,6 +3,10 @@
 {-# LANGUAGE TemplateHaskell  #-}
 {-# LANGUAGE NoImplicitPrelude  #-}
 
+Definition 1: The cyclomatic number V(G) of a graph G
+with n vertices, e edges, and p connected components is
+
+
 module ClocksAndRegisters.Models.Clks_n_regs_4 where
 
 import CLaSH.Prelude
@@ -77,7 +81,7 @@ topEntity = topEntity' st
   where
     st = St CounterDisabled 0 StopDisabled StopDisabled 0
 
-topEntity' :: St ->  Signal PIn -> Signal St--Signal st
+topEntity' :: St ->  Signal PIn -> Signal St
 topEntity' st pin = result
   where
     result = register st (onTrue <$> result <*> pin <*> rising )
