@@ -3,10 +3,6 @@
 {-# LANGUAGE TemplateHaskell  #-}
 {-# LANGUAGE NoImplicitPrelude  #-}
 
-Definition 1: The cyclomatic number V(G) of a graph G
-with n vertices, e edges, and p connected components is
-
-
 module ClocksAndRegisters.Models.Clks_n_regs_4 where
 
 import CLaSH.Prelude

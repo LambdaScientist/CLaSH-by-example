@@ -2,10 +2,8 @@
 {-# LANGUAGE RankNTypes  #-}
 {-# LANGUAGE ExistentialQuantification  #-}
 
-
 {-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE DeriveAnyClass #-}
-
 
 module SAFE.TestingTools where
 
