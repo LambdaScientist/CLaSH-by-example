@@ -12,6 +12,10 @@ import StateMachines.Models.StateMachine
 
 import Text.PrettyPrint.HughesPJClass
 
+import GHC.Generics (Generic)
+import Control.DeepSeq
+
+
 configurationList :: [Config]
 configurationList = [configOne, configTwo, configThree, configFour]
   where
@@ -33,7 +37,8 @@ configurationList = [configOne, configTwo, configThree, configFour]
 
 
 ----------------------------------------
-
+instance NFData Config where
+  rnf a = seq a ()  
 data Config = Config { input  :: PIn
                      , startSt :: St
                      }deriving(Eq,Show)

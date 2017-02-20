@@ -14,13 +14,18 @@ import SAFE.CommonClash
 
 import Text.PrettyPrint.HughesPJClass
 
+import GHC.Generics (Generic)
+import Control.DeepSeq
+
+
 --inputs
 data PIn = PIn { _clk   :: Bit
                , _reset :: Bool
                , _go    :: Bool
                , _kill  :: Bool
                } deriving (Eq, Show)
-
+instance NFData PIn where
+  rnf a = seq a ()
 --Outputs and state data
 data StateLabel = Idle | Active | Finish | Abort deriving (Show, Eq)
 
@@ -29,6 +34,8 @@ data St = St { _state_reg :: StateLabel
              , _done      :: Bool
              } deriving (Eq, Show)
 makeLenses ''St
+instance NFData St where
+  rnf a = seq a ()
 
 reset :: St
 reset = St Idle 0 False

@@ -12,6 +12,9 @@ import ModularDesign.Models.Modular1
 
 import Text.PrettyPrint.HughesPJClass
 
+import GHC.Generics (Generic)
+import Control.DeepSeq
+
 import qualified ModularDesign.Models.StateMachine as SM
 
 configurationList :: [Config]
@@ -41,6 +44,9 @@ instance Pretty Config where
                   $+$ text "startSt =" <+> pPrint startSt
 instance Transition Config where
   runOneTest = runOneTest'
+
+instance NFData Config where
+  rnf a = seq a ()
 
 setupTest :: Config -> Signal St
 setupTest (Config pin st) = topEntity' st sPin
