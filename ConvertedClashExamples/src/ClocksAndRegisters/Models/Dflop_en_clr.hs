@@ -10,6 +10,8 @@ import CLaSH.Prelude
 import Control.Lens hiding ((:>))
 
 import Text.PrettyPrint.HughesPJClass
+import GHC.Generics (Generic)
+import Control.DeepSeq
 
 import SAFE.TestingTools
 import SAFE.CommonClash
@@ -21,12 +23,15 @@ data PIn = PIn { _in1    :: Bit
                , _enable  :: Bool
                , _clearN :: Bool
                } deriving (Eq, Show)
-
+instance NFData PIn where
+  rnf a = seq a ()
 --Outputs and state data
 data St = St { _out1 :: Bit
              } deriving (Eq, Show)
 makeLenses ''St
-
+instance NFData St where
+  rnf a = seq a ()
+  
 onTrue :: St -> PIn -> Bool -> St
 onTrue st PIn{..} rEdge = ifReset
   where

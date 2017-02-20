@@ -14,6 +14,9 @@ import SAFE.CommonClash
 import ClocksAndRegisters.Models.SimpleDFlop
 
 import Text.PrettyPrint.HughesPJClass
+import GHC.Generics (Generic)
+import Control.DeepSeq
+
 
 
 import GHC.Generics (Generic)
@@ -50,7 +53,6 @@ instance Pretty Config where
                   $+$ text "startSt =" <+> pPrint startSt
 instance Transition Config where
   runOneTest = runOneTest'
-
 setupTest :: Config -> Signal St
 setupTest (Config pin st) = topEntity' st pin
 

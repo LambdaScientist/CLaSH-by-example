@@ -15,6 +15,8 @@ import SAFE.TestingTools
 import SAFE.CommonClash
 
 import Text.PrettyPrint.HughesPJClass
+import GHC.Generics (Generic)
+import Control.DeepSeq
 
 --inputs
 data PIn = PIn { _clk    :: Bit
@@ -22,7 +24,8 @@ data PIn = PIn { _clk    :: Bit
                , _start  :: Bool
                , _stop   :: Bool
                } deriving (Eq, Show)
-
+instance NFData PIn where
+  rnf a = seq a ()
 --Outputs and state data
 data St = St { _cntEn   :: Bool
              , _countUs :: BitVector 4
@@ -31,6 +34,8 @@ data St = St { _cntEn   :: Bool
              , _count    :: BitVector 4
              } deriving (Eq, Show)
 makeLenses ''St
+instance NFData St where
+  rnf a = seq a ()
 
 resetSTKeepCount :: BitVector 4 -> St
 resetSTKeepCount = St False 0 False False

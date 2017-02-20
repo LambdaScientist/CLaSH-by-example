@@ -11,6 +11,9 @@ import SAFE.CommonClash
 import ClocksAndRegisters.Models.SimpleDFlopWithReset
 
 import Text.PrettyPrint.HughesPJClass
+import GHC.Generics (Generic)
+import Control.DeepSeq
+
 
 configurationList :: [Config]
 configurationList = [configOne, configTwo, configThree, configFour]
@@ -41,6 +44,8 @@ instance Pretty Config where
                   $+$ text "startSt =" <+> pPrint startSt
 instance Transition Config where
   runOneTest = runOneTest'
+instance NFData Config where
+  rnf a = seq a ()
 
 setupTest :: Config -> Signal St
 setupTest (Config pin st) = topEntity' st sPin

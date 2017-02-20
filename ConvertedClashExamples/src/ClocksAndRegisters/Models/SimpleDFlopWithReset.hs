@@ -10,19 +10,27 @@ import CLaSH.Prelude
 import Control.Lens hiding ((:>))
 
 import Text.PrettyPrint.HughesPJClass
+import GHC.Generics (Generic)
+import Control.DeepSeq
 
 import SAFE.TestingTools
 import SAFE.CommonClash
+
+import GHC.Generics (Generic)
+import Control.DeepSeq
 
 --inputs
 data PIn = PIn { _in1 :: Bit
                , _clk  :: Bit
                , _reset :: Bool
                } deriving (Eq, Show)
-
+instance NFData PIn where
+  rnf a = seq a ()
 data St = St { _out1 :: Bit
              } deriving (Eq, Show)
 makeLenses ''St
+instance NFData St where
+  rnf a = seq a ()
 
 onTrue :: St -> PIn -> Bool -> St
 onTrue st PIn{..} condition = if _reset then St 0 else doinstead

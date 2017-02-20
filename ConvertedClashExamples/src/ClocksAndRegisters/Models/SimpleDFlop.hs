@@ -10,13 +10,14 @@ import CLaSH.Prelude
 import Control.Lens hiding ((:>))
 
 import Text.PrettyPrint.HughesPJClass
+import GHC.Generics (Generic)
+import Control.DeepSeq
 
 import SAFE.TestingTools
 import SAFE.CommonClash
 
 
-import GHC.Generics (Generic)
-import Control.DeepSeq
+
 --inputs
 data PIn = PIn { _in1 :: Bit
                , _clk  :: Bit
