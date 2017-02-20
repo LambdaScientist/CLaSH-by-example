@@ -34,7 +34,16 @@ configurationList = [configOne, configTwo, configThree, configFour]
 
 ---TESTING
 
-
+foo n | x == 2 = 2
+      | x== 3 = 3
+      | x == 4 = 4
+      | bar n == 5 = 5
+  where
+    x = bar n
+foo n = case bar n of
+        2 -> bar n == 3 = 3
+      | bar n == 4 = 4
+      | bar n == 5 = 5
 data Config = Config { input  :: PIn
                      , startSt :: St
                      }

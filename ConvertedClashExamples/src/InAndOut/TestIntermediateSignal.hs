@@ -12,6 +12,9 @@ import InAndOut.Models.IntermediateSignal
 
 import Text.PrettyPrint.HughesPJClass
 
+import GHC.Generics (Generic)
+import Control.DeepSeq
+
 configurationList :: [Config]
 configurationList = [configOne, configTwo, configThree, configFour]
   where
@@ -30,6 +33,9 @@ configurationList = [configOne, configTwo, configThree, configFour]
     configFour  = Config inputFour startSt
 ---TESTING
 
+instance NFData Config where
+  rnf a = seq a ()
+ 
 data Config = Config { input  :: PIn
                      , startSt :: St
                      }deriving(Eq,Show)

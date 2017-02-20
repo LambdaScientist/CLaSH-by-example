@@ -19,10 +19,6 @@ import Control.DeepSeq
 
 
 
-import GHC.Generics (Generic)
-import Control.DeepSeq
-
-
 configurationList :: [Config]
 configurationList = [configOne, configTwo, configThree, configFour]
   where

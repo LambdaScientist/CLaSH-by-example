@@ -12,6 +12,9 @@ import InAndOut.Models.BusSignals
 
 import Text.PrettyPrint.HughesPJClass
 
+import GHC.Generics (Generic)
+import Control.DeepSeq
+
 configurationList :: [Config]
 configurationList = [configOne, configTwo, configThree, configFour]
   where
@@ -29,6 +32,9 @@ configurationList = [configOne, configTwo, configThree, configFour]
     inputFour  = PIn 0 1 1
     configFour  = Config inputFour startSt
 ---TESTING
+
+instance NFData Config where
+  rnf a = seq a ()
 
 data Config = Config { input  :: PIn
                      , startSt :: St

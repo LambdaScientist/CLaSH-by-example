@@ -14,18 +14,25 @@ import SAFE.CommonClash
 
 import Text.PrettyPrint.HughesPJClass
 
+import GHC.Generics (Generic)
+import Control.DeepSeq
+
 --inputs
 data PIn = PIn { _in1 :: Bit
                , _in2 :: Bit
                , _in3 :: Bit
                } deriving (Eq, Show)
-
+instance NFData PIn where
+  rnf a = seq a ()
 --Outputs and state data
 data St = St { _out1 :: Bit
              , _out2 :: Bit
              } deriving (Eq, Show)
 makeLenses ''St
 
+instance NFData St where
+  rnf a = seq a ()
+  
 procSimple :: St -> PIn -> St
 procSimple st@St{..} PIn{..} = flip execState st $ do
   out1 .= (_in1 .&. _in2 .&. _in3)
@@ -49,7 +56,7 @@ instance Pretty PIn where
                $+$ text "_in1 =" <+> showT _in1
                $+$ text "_in2 =" <+> showT _in2
                $+$ text "_in3 =" <+> showT _in3
-               
+
 instance SysState St
 instance Pretty St where
  pPrint St {..} = text "St"

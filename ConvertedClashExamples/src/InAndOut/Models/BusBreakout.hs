@@ -13,18 +13,25 @@ import SAFE.TestingTools
 import SAFE.CommonClash
 
 import Text.PrettyPrint.HughesPJClass
+import GHC.Generics (Generic)
+import Control.DeepSeq
+
 
 --inputs
 data PIn = PIn { _in1 :: BitVector 4
                , _in2 :: BitVector 4
                , _in3 :: Bit
                } deriving (Eq, Show)
-
+instance NFData PIn where
+  rnf a = seq a ()
 --Outputs and state data
 data St = St { _out1 :: BitVector 6
              } deriving (Eq, Show)
 makeLenses ''St
 
+instance NFData St where
+  rnf a = seq a ()
+  
 procSimple :: St -> PIn -> St
 procSimple st@St{..} PIn{..} = flip execState st $
   out1 .= (p1 ++# p2 ++# p3 ++# p4)

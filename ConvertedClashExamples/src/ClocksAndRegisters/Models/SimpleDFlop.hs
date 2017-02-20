@@ -30,6 +30,7 @@ data St = St { _out1 :: Bit
 makeLenses ''St
 instance NFData St where
   rnf a = seq a ()
+
 onTrue :: St -> PIn -> Bool -> St
 onTrue st PIn{..} condition = if condition then st{ _out1 = _in1 } else st
 
