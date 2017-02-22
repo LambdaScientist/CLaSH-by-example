@@ -27,14 +27,15 @@ configurationList = [configOne, configTwo, configThree, configFour]
     inputOne  = signal $ PIn 0 0
     configOne = Config inputOne startSt
 
-    inputTwo  = signal $ PIn 0 0
+    inputTwo  = signal $ PIn 0 1
     configTwo = Config inputTwo startSt
 
-    inputThree  = signal $ PIn 0 0
+    inputThree  = signal $ PIn 1 0
     configThree = Config inputThree startSt
 
-    inputFour  = signal $ PIn 0 0
-    configFour = Config inputFour startSt
+    startStOther    = St 1
+    inputFour  = signal $ PIn 1 1
+    configFour = Config inputFour startStOther
 
 ---TESTING
 data Config = Config { input  :: Signal PIn

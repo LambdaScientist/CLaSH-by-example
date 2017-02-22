@@ -14,25 +14,26 @@ import Text.PrettyPrint.HughesPJClass
 import SAFE.TestingTools
 import SAFE.CommonClash
 
+import GHC.Generics (Generic)
+import Control.DeepSeq
+
 data SignalStatus  = IsRising | NotRising deriving (Eq, Show)
 
 --inputs
 data PIn = PIn { _in1 :: Bit
-               , _clk  :: Bit
+               , _clk :: Bit
                } deriving (Eq, Show)
-
+instance NFData PIn where
+  rnf a = seq a ()
 data St = St { _out1 :: Bit
              } deriving (Eq, Show)
 makeLenses ''St
+instance NFData St where
+  rnf a = seq a ()
 
 onTrue :: St -> PIn -> SignalStatus -> St
 onTrue st PIn{_in1 = input1} IsRising = st{ _out1 = input1 }
-onTrue st _ condition = st
-
-getSignalStatus :: (Bounded a, Eq a) => a -> Signal a -> Signal SignalStatus
-getSignalStatus value sigValue = status <$> isRising value sigValue
-  where
-    status rising = if rising then IsRising else NotRising
+onTrue st _ _ = st
 
 topEntity :: Signal PIn -> Signal St
 topEntity = topEntity' startSt
@@ -46,6 +47,10 @@ topEntity' st pin = result
     rising = getSignalStatus 0 clk
     clk = _clk <$> pin
 
+getSignalStatus :: (Bounded a, Eq a) => a -> Signal a -> Signal SignalStatus
+getSignalStatus value sigValue = status <$> isRising value sigValue
+  where
+    status rising = if rising then IsRising else NotRising
 
 --- The following code is only for a custom testing framework, and PrettyPrinted  output
 
