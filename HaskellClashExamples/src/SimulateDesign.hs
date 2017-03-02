@@ -11,7 +11,7 @@
 -- import ClocksAndRegisters.TestSimpleDFlop
 -- import ClocksAndRegisters.Models.SimpleDFlop
 
--- import ClocksAndRegisters.TestSimpleDFlopWithReset
+import ClocksAndRegisters.TestSimpleDFlopWithReset
 -- import ClocksAndRegisters.Models.SimpleDFlopWithReset
 
 -- import InAndOut.TestBusBreakout
@@ -44,7 +44,7 @@
 
 
 
-import StateMachines.TestStateMachine2
+-- import StateMachines.TestStateMachine2
 -- import StateMachines.Models.StateMachine2
 
 -- import ModularDesign.TestModular1
@@ -61,7 +61,7 @@ import StateMachines.TestStateMachine2
 import Prelude
 
 
--- main = print ppSetupAndRun
+main = print ppSetupAndRun
 
 -- topEntity = CR.topEntity
 
