@@ -2,7 +2,7 @@
 -- import ClocksAndRegisters.TestClks_n_regs_5
 -- import ClocksAndRegisters.TestDflop_en_clr
 -- import ClocksAndRegisters.TestDflop_sync_enable
-import ClocksAndRegisters.TestSimpleDFlop
+-- import ClocksAndRegisters.TestSimpleDFlop
 -- import ClocksAndRegisters.TestSimpleDFlopWithReset
 -- import qualified ClocksAndRegisters.Models.Clks_n_regs_4 as CR
 -- import ClocksAndRegisters.Models.Clks_n_regs_5
@@ -27,7 +27,7 @@ import ClocksAndRegisters.TestSimpleDFlop
 -- import SAFE.CommonClash
 -- import SAFE.TestingTools
 
--- import StateMachines.TestStateMachine
+import StateMachines.TestStateMachine
 -- import StateMachines.TestStateMachine2
 -- import StateMachines.Models.StateMachine
 -- import StateMachines.Models.StateMachine2

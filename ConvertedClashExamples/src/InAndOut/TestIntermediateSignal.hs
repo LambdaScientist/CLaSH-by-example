@@ -20,22 +20,22 @@ configurationList = [configOne, configTwo, configThree, configFour]
   where
     startSt    = St 0 0
 
-    inputOne   = PIn 1 1 1
+    inputOne   = PIn 1 0 0
     configOne  = Config inputOne startSt
 
-    inputTwo    = PIn 1 1 0
+    inputTwo    = PIn 0 0 1
     configTwo  = Config inputTwo startSt
 
-    inputThree = PIn 1 0 1
+    inputThree = PIn 1 1 0
     configThree  = Config inputThree startSt
 
-    inputFour  = PIn 0 1 1
+    inputFour  = PIn 1 1 1
     configFour  = Config inputFour startSt
 ---TESTING
 
 instance NFData Config where
   rnf a = seq a ()
- 
+
 data Config = Config { input  :: PIn
                      , startSt :: St
                      }deriving(Eq,Show)
