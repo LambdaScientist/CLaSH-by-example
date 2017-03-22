@@ -26,10 +26,10 @@ configurationList = [configOne, configTwo, configThree, configFour]
     inputTwo  = PIn 1 1 False True False
     configTwo = Config inputTwo startSt
 
-    inputThree  = PIn 1 1 False False True
+    inputThree  = PIn 0 1 False False True
     configThree = Config inputThree startSt
 
-    inputFour  = PIn 1 0 False False True
+    inputFour  = PIn 1 0 False True True
     configFour = Config inputFour startSt
 
 
