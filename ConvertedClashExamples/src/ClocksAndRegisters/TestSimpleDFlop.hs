@@ -54,7 +54,10 @@ setupTest :: Config -> Signal St
 setupTest (Config pin st) = topEntity' st pin
 
 setupAndRun :: [[TestResult]]
-setupAndRun = runConfigList setupTest configurationList
+setupAndRun = runConfigList' False 5 setupTest configurationList
 
 ppSetupAndRun :: Doc
 ppSetupAndRun = pPrint setupAndRun
+
+ppSetupAndRun2 :: String
+ppSetupAndRun2 = show setupAndRun

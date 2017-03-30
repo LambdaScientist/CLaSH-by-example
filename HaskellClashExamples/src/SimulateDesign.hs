@@ -1,5 +1,5 @@
 -- CONVERTED
--- import ClocksAndRegisters.TestClks_n_regs_4
+import ClocksAndRegisters.TestClks_n_regs_4
 -- import qualified ClocksAndRegisters.Models.Clks_n_regs_4 as CR
 
 -- import ClocksAndRegisters.TestDflop_en_clr
@@ -11,7 +11,7 @@
 -- import ClocksAndRegisters.TestSimpleDFlop
 -- import ClocksAndRegisters.Models.SimpleDFlop
 
-import ClocksAndRegisters.TestSimpleDFlopWithReset
+--import ClocksAndRegisters.TestSimpleDFlopWithReset
 -- import ClocksAndRegisters.Models.SimpleDFlopWithReset
 
 -- import InAndOut.TestBusBreakout

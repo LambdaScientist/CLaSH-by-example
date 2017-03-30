@@ -83,7 +83,7 @@ instance SysState St
 instance Pretty St where
   pPrint St {..} = text "St"
                $+$ text "_cntEn ="   <+>  showT _cntEn
-               $+$ text "_countUs =" <+>  showT _countUs
+               $+$ text "_countUs ="      <+>     showT _countUs
                $+$ text "_stopD1 ="  <+>  showT _stopD1
                $+$ text "_stopD2 ="  <+>  showT _stopD2
                $+$ text "_count ="   <+>  showT _count
