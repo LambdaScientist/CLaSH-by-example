@@ -17,16 +17,16 @@ configurationList = [configOne, configTwo, configThree, configFour]
   where
     startSt    = St 0
 
-    inputOne   = PIn  0 1 ChooseLeft
+    inputOne   = PIn  0 1 ChooseRight
     configOne  = Config inputOne startSt
 
-    inputTwo    = PIn 0 0 ChooseLeft
+    inputTwo    = PIn 0 1 ChooseLeft
     configTwo  = Config inputTwo startSt
 
-    inputThree = PIn 1 0 ChooseLeft
+    inputThree = PIn 1 0 ChooseRight
     configThree  = Config inputThree startSt
 
-    inputFour  = PIn 1 0 ChooseRight
+    inputFour  = PIn 1 1 ChooseLeft
     configFour  = Config inputFour startSt
 
 ---TESTING

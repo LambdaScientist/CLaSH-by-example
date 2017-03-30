@@ -18,16 +18,16 @@ configurationList = [configOne, configTwo, configThree, configFour]
   where
     startSt    = St 0
 
-    inputOne  = PIn 0 0 ResetDisabled
+    inputOne  = PIn 1 0 ResetEnabled
     configOne = Config inputOne startSt
 
-    inputTwo  = PIn 0 0 ResetDisabled
+    inputTwo  = PIn 1 1 ResetDisabled
     configTwo = Config inputTwo startSt
 
     inputThree  = PIn 0 0 ResetDisabled
     configThree = Config inputThree startSt
 
-    inputFour  = PIn 0 0 ResetDisabled
+    inputFour  = PIn 0 1 ResetDisabled
     configFour = Config inputFour startSt
 
 ---TESTING
@@ -44,7 +44,7 @@ instance Transition Config where
   runOneTest = runOneTest'
 instance NFData Config where
   rnf a = seq a ()
-  
+
 setupTest :: Config -> Signal St
 setupTest (Config pin st) = topEntity' st sPin
   where
