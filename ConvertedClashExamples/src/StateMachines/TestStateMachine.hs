@@ -21,16 +21,16 @@ configurationList = [configOne, configTwo, configThree, configFour]
   where
     startSt = St Idle 0 False
 
-    inputOne  = PIn 1 False False False
+    inputOne  = PIn 1 True False False
     configOne = Config inputOne startSt
 
-    inputTwo  = PIn 1 False False False
+    inputTwo  = PIn 1 False True True
     configTwo = Config inputTwo startSt
 
-    inputThree  = PIn 1 False False False
+    inputThree  = PIn 1 False True False
     configThree = Config inputThree startSt
 
-    inputFour  = PIn 1 False False False
+    inputFour  = PIn 0 False True True
     configFour = Config inputFour startSt
 
 ---TESTING
@@ -38,7 +38,7 @@ configurationList = [configOne, configTwo, configThree, configFour]
 
 ----------------------------------------
 instance NFData Config where
-  rnf a = seq a ()  
+  rnf a = seq a ()
 data Config = Config { input  :: PIn
                      , startSt :: St
                      }deriving(Eq,Show)
