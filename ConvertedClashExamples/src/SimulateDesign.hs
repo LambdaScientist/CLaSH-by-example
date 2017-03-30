@@ -15,7 +15,7 @@
 -- import InAndOut.TestIntermediateSignal
 -- import InAndOut.TestBusSignals
 -- import InAndOut.TestSimpleInOut
--- import InAndOut.TestStandardMux1
+import InAndOut.TestStandardMux1
 -- import InAndOut.TestStandardMux2
 -- import InAndOut.Models.BusBreakout
 -- import InAndOut.Models.BusSignals
@@ -27,7 +27,7 @@
 -- import SAFE.CommonClash
 -- import SAFE.TestingTools
 
-import StateMachines.TestStateMachine
+-- import StateMachines.TestStateMachine
 -- import StateMachines.TestStateMachine2
 -- import StateMachines.Models.StateMachine
 -- import StateMachines.Models.StateMachine2

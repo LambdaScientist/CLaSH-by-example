@@ -25,13 +25,13 @@ configurationList = [configOne, configTwo, configThree, configFour]
     inputOne  = PIn 1 ResetEnabled DontGo Terminate
     configOne = Config inputOne startSt
 
-    inputTwo  = PIn 1 ResetEnabled DontGo Terminate
+    inputTwo  = PIn 1 ResetDisabled Go Terminate
     configTwo = Config inputTwo startSt
 
-    inputThree  = PIn 1 ResetEnabled DontGo Terminate
+    inputThree  = PIn 1 ResetDisabled DontGo DontKill
     configThree = Config inputThree startSt
 
-    inputFour  = PIn 1 ResetEnabled DontGo Terminate
+    inputFour  = PIn 0 ResetDisabled Go Terminate
     configFour = Config inputFour startSt
 
 
