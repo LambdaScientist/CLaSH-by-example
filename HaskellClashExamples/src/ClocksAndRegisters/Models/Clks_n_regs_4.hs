@@ -16,6 +16,9 @@ import SAFE.CommonClash
 
 import Text.PrettyPrint.HughesPJClass
 
+import GHC.Generics (Generic)
+import Control.DeepSeq
+
 data SignalStatus  = IsRising | NotRising deriving (Eq, Show)
 data CounterStatus = CounterEnabled | CounterDisabled deriving (Eq, Show)
 data StartStatus   = StartEnabled | StartDisabled deriving (Eq, Show)
@@ -29,7 +32,8 @@ data PIn = PIn { _clk   :: Bit
                , _start :: StartStatus
                , _stop  :: StopStatus
                } deriving (Eq, Show)
-
+instance NFData PIn where
+  rnf a = seq a ()
 --Outputs and state data
 data St = St { _cntEn   :: CounterStatus
              , _countUs :: BitVector 4
@@ -38,6 +42,8 @@ data St = St { _cntEn   :: CounterStatus
              , _count   :: BitVector 4
              } deriving (Eq, Show)
 makeLenses ''St
+instance NFData St where
+  rnf a = seq a ()
 
 resetSTWithCount :: BitVector 4 -> St
 resetSTWithCount = St CounterDisabled 0 StopDisabled StopDisabled

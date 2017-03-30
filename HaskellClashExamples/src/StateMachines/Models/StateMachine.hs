@@ -63,11 +63,15 @@ stateActions st@St{..} pin@PIn{..} IsRising = stateAction
     stateAction :: (St -> St)
     stateAction | _stateReg == Finish = setCountTo0.setDoneToDone
                 | _stateReg == Abort  = setCountTo0.setDoneToNotDone
-                | _stateReg == Active = incCount.setDoneToNotDone
+                | _stateReg == Active = incCount.setDoneToNotDone 
+                | otherwise = id
     setCountTo0 = (count .~ 0)
     setDoneToDone = (done .~ Done)
     setDoneToNotDone = (done .~ NotDone)
     incCount = (count +~ 1)
+stateActions st _ _ = id
+
+
 
 onRun :: St -> PIn -> SignalStatus -> St
 onRun st pin ss = stateActions st pin ss $ nextState st pin ss

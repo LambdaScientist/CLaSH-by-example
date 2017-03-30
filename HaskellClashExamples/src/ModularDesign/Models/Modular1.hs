@@ -2,6 +2,7 @@
 {-# LANGUAGE RecordWildCards  #-}
 {-# LANGUAGE TemplateHaskell  #-}
 {-# LANGUAGE NoImplicitPrelude  #-}
+{-# LANGUAGE DeriveAnyClass #-}
 
 module ModularDesign.Models.Modular1 where
 
@@ -16,11 +17,16 @@ import SAFE.CommonClash
 
 import Text.PrettyPrint.HughesPJClass
 
+import Control.DeepSeq
+import GHC.Generics (Generic)
+
 import qualified ModularDesign.Models.StateMachine as SM
 
 data Partial = PPIn { _go'    :: Bool
                     , _kill'  :: Bool
                     } deriving (Eq, Show)
+instance NFData Partial where
+  rnf a = seq a ()
 
 data MPIn = MPIn { _clk'     :: Bit
                  , _reset'   :: Bool
@@ -29,7 +35,8 @@ data MPIn = MPIn { _clk'     :: Bit
                  , _pin2     :: Partial
                  , _pin3     :: Partial
                  } deriving (Eq, Show)
-
+instance NFData MPIn where
+  rnf a = seq a ()
 --Outputs and state data
 data StateLabel = Idle | Active | Finish | Abort deriving (Show, Eq)
 
@@ -42,8 +49,12 @@ data St = St { _state_reg :: SM.StateLabel
              } deriving (Eq, Show)
 makeLenses ''St
 
+instance NFData St where
+  rnf a = seq a ()
+  
 partial2full :: Partial -> Bit -> Bool -> SM.PIn
 partial2full (PPIn go kill) clk reset = SM.PIn clk reset go kill
+
 
 resetSt :: St -> St
 resetSt (St x y z1 z2 z3  _) = St x y z1 z2 z3 False

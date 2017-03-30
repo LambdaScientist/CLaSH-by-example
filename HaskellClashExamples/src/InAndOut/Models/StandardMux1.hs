@@ -14,6 +14,9 @@ import SAFE.CommonClash
 
 import Text.PrettyPrint.HughesPJClass
 
+import Control.DeepSeq
+import GHC.Generics (Generic)
+
 data MultiPlexerChoice  = ChooseLeft | ChooseRight deriving (Eq, Show)
 
 --inputs
@@ -21,11 +24,14 @@ data PIn = PIn { _in1 :: BitVector 4
                , _in2 :: BitVector 4
                , _in3 :: MultiPlexerChoice
                } deriving (Eq, Show)
-
+instance NFData PIn where
+  rnf a = seq a ()
 --Outputs and state data
 data St = St { _out1 :: BitVector 4
              } deriving (Eq, Show)
 makeLenses ''St
+instance NFData St where
+  rnf a = seq a ()
 
 procSimple :: St -> PIn -> St
 procSimple st@St{..} PIn{..} = st & (out1 .~ multiPlex _in3 _in1 _in2)

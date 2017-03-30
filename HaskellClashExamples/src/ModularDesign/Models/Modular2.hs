@@ -18,9 +18,15 @@ import Text.PrettyPrint.HughesPJClass
 
 import qualified ModularDesign.Models.StateMachine as SM
 
+import Control.DeepSeq
+import GHC.Generics (Generic)
+
 data Partial = PPIn { _go'    :: Bool
                     , _kill'  :: Bool
                     } deriving (Eq, Show)
+
+instance NFData Partial where
+  rnf a = seq a ()
 
 data MPIn = MPIn { _clk'     :: Bit
                  , _reset'   :: Bool
@@ -30,6 +36,9 @@ data MPIn = MPIn { _clk'     :: Bit
                  , _pin3     :: Partial
                  } deriving (Eq, Show)
 
+instance NFData MPIn where
+  rnf a = seq a ()
+  
 --Outputs and state data
 data StateLabel = Idle | Active | Finish | Abort deriving (Show, Eq)
 
@@ -41,6 +50,8 @@ data St = St { _state_reg  :: SM.StateLabel
              , _kill_ltchd :: Bool
              } deriving (Eq, Show)
 makeLenses ''St
+instance NFData St where
+  rnf a = seq a ()
 
 partial2full :: Partial -> Bit -> Bool -> SM.PIn
 partial2full (PPIn go kill) clk reset = SM.PIn clk reset go kill

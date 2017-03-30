@@ -12,6 +12,10 @@ import InAndOut.Models.StandardMux2
 
 import Text.PrettyPrint.HughesPJClass
 
+import GHC.Generics (Generic)
+import Control.DeepSeq
+
+
 configurationList :: [Config]
 configurationList = [configOne, configTwo, configThree, configFour]
   where
@@ -27,7 +31,7 @@ configurationList = [configOne, configTwo, configThree, configFour]
     configThree  = Config inputThree startSt
 
     inputFour  = PIn 1 1 0
-    configFour  = Config inputFour startSt
+    configFour = Config inputFour startSt
 
 ---TESTING
 
@@ -40,6 +44,9 @@ instance Pretty Config where
                  $+$ text "startSt =" <+>  pPrint startSt
 instance  Transition Config where
   runOneTest = runOneTest'
+
+instance NFData Config where
+  rnf a = seq a ()
 
 setupTest :: Config -> Signal St
 setupTest (Config pin st) = topEntity' st sPin

@@ -14,6 +14,9 @@ import Text.PrettyPrint.HughesPJClass
 import SAFE.TestingTools
 import SAFE.CommonClash
 
+import GHC.Generics (Generic)
+import Control.DeepSeq
+
 data SignalStatus  = IsRising | NotRising deriving (Eq, Show)
 data ClearStatus   = ClearEnabled | ClearDisabled deriving (Eq, Show)
 data ResetStatus   = ResetEnabled | ResetDisabled deriving (Eq, Show)
@@ -26,12 +29,14 @@ data PIn = PIn { _in1    :: Bit
                , _enable :: ActiveStatus
                , _clearN :: ClearStatus
                } deriving (Eq, Show)
-
+instance NFData PIn where
+  rnf a = seq a ()
 --Outputs and state data
 data St = St { _out1 :: Bit
              } deriving (Eq, Show)
 makeLenses ''St
-
+instance NFData St where
+  rnf a = seq a ()
 onTrue :: St -> PIn -> SignalStatus -> St
 onTrue _ PIn{_reset = ResetEnabled} _ = St 0
 onTrue st PIn{_clearN = ClearDisabled} IsRising = st & out1 .~ 0

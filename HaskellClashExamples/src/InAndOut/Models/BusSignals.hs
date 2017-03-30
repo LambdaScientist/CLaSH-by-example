@@ -14,16 +14,23 @@ import Text.PrettyPrint.HughesPJClass
 import SAFE.TestingTools
 import SAFE.CommonClash
 
+import GHC.Generics (Generic)
+import Control.DeepSeq
+
+
 --inputs
 data PIn = PIn { _in1 :: BitVector 4
                , _in2 :: BitVector 4
                , _in3 :: Bit
                } deriving (Eq, Show)
-
+instance NFData PIn where
+  rnf a = seq a ()
 --Outputs and state data
 data St = St { _out1 :: BitVector 4
              } deriving (Eq, Show)
 makeLenses ''St
+instance NFData St where
+  rnf a = seq a ()
 
 procSimple :: St -> PIn -> St
 procSimple st@St{..} PIn{..} = st & out1 .~ keepValue (bnot _in3) _in1 .|. keepValue _in3 _in2

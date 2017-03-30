@@ -12,6 +12,10 @@ import InAndOut.Models.BusSignals
 
 import Text.PrettyPrint.HughesPJClass
 
+import GHC.Generics (Generic)
+import Control.DeepSeq
+
+
 configurationList :: [Config]
 configurationList = [configOne, configTwo, configThree, configFour]
   where
@@ -37,8 +41,12 @@ instance Pretty Config where
  pPrint Config{..} = text "Config:"
                  $+$ text "input ="   <+> pPrint input
                  $+$ text "startSt =" <+>  pPrint startSt
-instance  Transition Config where
+instance Transition Config where
   runOneTest = runOneTest'
+
+instance NFData Config where
+  rnf a = seq a ()
+
 
 setupTest :: Config -> Signal St
 setupTest (Config pin st) = topEntity' st sPin

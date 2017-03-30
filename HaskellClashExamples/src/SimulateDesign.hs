@@ -1,5 +1,5 @@
 -- CONVERTED
-import ClocksAndRegisters.TestClks_n_regs_4
+-- import ClocksAndRegisters.TestClks_n_regs_4
 -- import qualified ClocksAndRegisters.Models.Clks_n_regs_4 as CR
 
 -- import ClocksAndRegisters.TestDflop_en_clr
@@ -11,7 +11,7 @@ import ClocksAndRegisters.TestClks_n_regs_4
 -- import ClocksAndRegisters.TestSimpleDFlop
 -- import ClocksAndRegisters.Models.SimpleDFlop
 
---import ClocksAndRegisters.TestSimpleDFlopWithReset
+-- import ClocksAndRegisters.TestSimpleDFlopWithReset
 -- import ClocksAndRegisters.Models.SimpleDFlopWithReset
 
 -- import InAndOut.TestBusBreakout
@@ -35,6 +35,9 @@ import ClocksAndRegisters.TestClks_n_regs_4
 -- import StateMachines.TestStateMachine
 -- import StateMachines.Models.StateMachine
 
+-- import StateMachines.TestStateMachine2
+-- import StateMachines.Models.StateMachine2
+
 -------------- DEAD ------------------------------------------------------------
 --These died because VHDL variables are not very sensible
 -- import ClocksAndRegisters.TestClks_n_regs_5
@@ -44,14 +47,13 @@ import ClocksAndRegisters.TestClks_n_regs_4
 
 
 
--- import StateMachines.TestStateMachine2
--- import StateMachines.Models.StateMachine2
 
 -- import ModularDesign.TestModular1
 -- import ModularDesign.Models.Modular1
 
+
+import ModularDesign.TestModular2
 -- import ModularDesign.Models.Modular2
--- import ModularDesign.TestModular2
 
 -- import ModularDesign.Models.StateMachine
 
