@@ -17,16 +17,16 @@ configurationList = [configOne, configTwo, configThree, configFour]
   where
     startSt    = St CounterDisabled 0 StopDisabled StopDisabled 0
 
-    inputOne = PIn 0 ResetDisabled StartDisabled StopDisabled
+    inputOne = PIn 1 ResetEnabled StartDisabled StopDisabled
     configOne = Config inputOne startSt
 
-    inputTwo  = PIn 0 ResetDisabled StartDisabled StopDisabled
+    inputTwo  = PIn 1 ResetDisabled StartEnabled StopDisabled
     configTwo = Config inputTwo startSt
 
-    inputThree  = PIn 0 ResetDisabled StartDisabled StopDisabled
+    inputThree  = PIn 1 ResetDisabled StartDisabled StopEnabled
     configThree = Config inputThree startSt
 
-    inputFour  = PIn 0 ResetDisabled StartDisabled StopDisabled
+    inputFour  = PIn 0 ResetDisabled StartDisabled StopEnabled
     configFour = Config inputFour startSt
 
 ---TESTING
