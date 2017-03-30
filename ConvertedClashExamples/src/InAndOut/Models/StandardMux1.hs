@@ -31,7 +31,7 @@ makeLenses ''St
 
 instance NFData St where
   rnf a = seq a ()
-  
+
 procSimple :: St -> PIn -> St
 procSimple st@St{..} PIn{..} = st & (out1 .~ multiPlex _in3 _in1 _in2)
 

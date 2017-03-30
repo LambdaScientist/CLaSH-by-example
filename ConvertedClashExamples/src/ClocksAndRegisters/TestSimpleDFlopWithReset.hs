@@ -20,20 +20,19 @@ configurationList = [configOne, configTwo, configThree, configFour]
   where
     startSt    = St 0
 
-    inputOne  = PIn 0 0 False
+    inputOne  = PIn 1 0 True
     configOne = Config inputOne startSt
 
-    inputTwo  = PIn 0 0 False
+    inputTwo  = PIn 1 1 False
     configTwo = Config inputTwo startSt
 
     inputThree  = PIn 0 0 False
     configThree = Config inputThree startSt
 
-    inputFour  = PIn 0 0 False
+    inputFour  = PIn 0 1 False
     configFour = Config inputFour startSt
 
 ---TESTING
-
 data Config = Config { input  :: PIn
                      , startSt :: St
                      }
