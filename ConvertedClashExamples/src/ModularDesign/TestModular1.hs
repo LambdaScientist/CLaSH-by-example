@@ -22,16 +22,16 @@ configurationList = [configOne, configTwo, configThree, configFour]
   where
     startSt    = St SM.Idle 0 False False False False
 
-    inputOne   = MPIn 0 False False (PPIn False False) (PPIn False False) (PPIn False False)
+    inputOne   = MPIn 1 True False (PPIn True False) (PPIn True True) (PPIn False True)
     configOne  = Config inputOne startSt
 
-    inputTwo    = MPIn 0 False False (PPIn False False) (PPIn False False) (PPIn False False)
+    inputTwo    = MPIn 1 False False (PPIn True False) (PPIn True False) (PPIn True True)
     configTwo  = Config inputTwo startSt
 
-    inputThree = MPIn 0 False False (PPIn False False) (PPIn False False) (PPIn False False)
+    inputThree = MPIn 1 False True (PPIn True False) (PPIn True False) (PPIn False False)
     configThree  = Config inputThree startSt
 
-    inputFour  = MPIn 0 False False (PPIn False False) (PPIn False False) (PPIn False False)
+    inputFour  = MPIn 1 False False (PPIn True False) (PPIn True False) (PPIn True False)
     configFour  = Config inputFour startSt
 
 ---TESTING
