@@ -8,7 +8,7 @@
 -- import ClocksAndRegisters.Models.Clks_n_regs_5
 -- import ClocksAndRegisters.Models.Dflop_en_clr
 -- import ClocksAndRegisters.Models.Dflop_sync_enable
--- import ClocksAndRegisters.Models.SimpleDFlop
+import ClocksAndRegisters.Models.SimpleDFlop
 -- import ClocksAndRegisters.Models.SimpleDFlopWithReset
 
 -- import InAndOut.TestBusBreakout
@@ -32,7 +32,7 @@
 -- import StateMachines.Models.StateMachine
 -- import StateMachines.Models.StateMachine2
 
-import ModularDesign.TestModular1
+-- import ModularDesign.TestModular1
 -- import ModularDesign.TestModular2
 -- import ModularDesign.Models.Modular1
 -- import ModularDesign.Models.Modular2
