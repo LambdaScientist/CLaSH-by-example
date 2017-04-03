@@ -54,7 +54,7 @@ onRun st@St{..} PIn{..} risingEdge = flip execState st $ do
       _  -> state_reg .= Idle
   when risingEdge $ do
     if _state_reg == Finish || _state_reg == Abort then count .= 0
-                                                  else when (_state_reg == Active) $ count += 1
+                                                    else when (_state_reg == Active) $ count += 1
     if _state_reg == Finish then done .= True else done .= False
 
 topEntity :: Signal PIn -> Signal St

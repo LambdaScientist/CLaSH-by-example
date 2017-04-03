@@ -15,7 +15,7 @@
 -- import InAndOut.TestIntermediateSignal
 -- import InAndOut.TestBusSignals
 -- import InAndOut.TestSimpleInOut
-import InAndOut.TestStandardMux1
+-- import InAndOut.TestStandardMux1
 -- import InAndOut.TestStandardMux2
 -- import InAndOut.Models.BusBreakout
 -- import InAndOut.Models.BusSignals
@@ -32,7 +32,7 @@ import InAndOut.TestStandardMux1
 -- import StateMachines.Models.StateMachine
 -- import StateMachines.Models.StateMachine2
 
--- import ModularDesign.TestModular1
+import ModularDesign.TestModular1
 -- import ModularDesign.TestModular2
 -- import ModularDesign.Models.Modular1
 -- import ModularDesign.Models.Modular2
