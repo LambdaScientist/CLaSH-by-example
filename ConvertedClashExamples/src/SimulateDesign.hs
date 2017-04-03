@@ -8,7 +8,7 @@
 -- import ClocksAndRegisters.Models.Clks_n_regs_5
 -- import ClocksAndRegisters.Models.Dflop_en_clr
 -- import ClocksAndRegisters.Models.Dflop_sync_enable
--- import ClocksAndRegisters.Models.SimpleDFlop
+import ClocksAndRegisters.Models.SimpleDFlop
 -- import ClocksAndRegisters.Models.SimpleDFlopWithReset
 
 -- import InAndOut.TestBusBreakout
