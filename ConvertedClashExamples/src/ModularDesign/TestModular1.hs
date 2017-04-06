@@ -20,7 +20,7 @@ import qualified ModularDesign.Models.StateMachine as SM
 configurationList :: [Config]
 configurationList = [configOne, configTwo, configThree, configFour]
   where
-    startSt    = St SM.Idle 0 False False False False
+    startSt    = St SM.Active 99 False False False False
 
     inputOne   = MPIn 1 True False (PPIn True False) (PPIn True True) (PPIn False True)
     configOne  = Config inputOne startSt
@@ -28,10 +28,10 @@ configurationList = [configOne, configTwo, configThree, configFour]
     inputTwo    = MPIn 1 False False (PPIn True False) (PPIn True False) (PPIn True True)
     configTwo  = Config inputTwo startSt
 
-    inputThree = MPIn 1 False True (PPIn True False) (PPIn True False) (PPIn False False)
+    inputThree = MPIn 1 False True (PPIn True False) (PPIn True False) (PPIn True False)
     configThree  = Config inputThree startSt
 
-    inputFour  = MPIn 1 False False (PPIn True False) (PPIn True False) (PPIn True False)
+    inputFour  = MPIn 1 False False (PPIn True False) (PPIn True False) (PPIn True True)
     configFour  = Config inputFour startSt
 
 ---TESTING
