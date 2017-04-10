@@ -53,8 +53,11 @@ setupTest (Config pin st) = topEntity' st sPin
   where
     sPin = signal pin
 
+-- setupAndRun :: [[TestResult]]
+-- setupAndRun = runConfigList setupTest configurationList
+
 setupAndRun :: [[TestResult]]
-setupAndRun = runConfigList setupTest configurationList
+setupAndRun = runConfigList' True 3 setupTest configurationList
 
 ppSetupAndRun :: Doc
 ppSetupAndRun = pPrint setupAndRun
