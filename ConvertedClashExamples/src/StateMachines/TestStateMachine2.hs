@@ -19,7 +19,7 @@ import Control.DeepSeq
 configurationList :: [Config]
 configurationList = [configOne, configTwo, configThree, configFour]
   where
-    startSt = St Active 99 False
+    startSt = St Active 100 False
 
     inputOne  = PIn 1 True False False
     configOne = Config inputOne startSt
@@ -30,7 +30,7 @@ configurationList = [configOne, configTwo, configThree, configFour]
     inputThree  = PIn 1 False True False
     configThree = Config inputThree startSt
 
-    inputFour  = PIn 1 False False False
+    inputFour  = PIn 1 False False True
     configFour = Config inputFour startSt
 
 ---TESTING
