@@ -20,7 +20,7 @@ import qualified ModularDesign.Models.StateMachine as SM
 configurationList :: [Config]
 configurationList = [configOne, configTwo, configThree, configFour]
   where
-    startSt    = St SM.Active 99 False False False False
+    startSt    = St SM.Active 100 False False False False
 
     inputOne   = MPIn 1 True False (PPIn True False) (PPIn True True) (PPIn False True)
     configOne  = Config inputOne startSt

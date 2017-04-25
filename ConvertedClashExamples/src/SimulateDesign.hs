@@ -28,11 +28,11 @@
 -- import SAFE.TestingTools
 
 -- import StateMachines.TestStateMachine
-import StateMachines.TestStateMachine2
+-- import StateMachines.TestStateMachine2
 -- import StateMachines.Models.StateMachine
 -- import StateMachines.Models.StateMachine2
 
--- import ModularDesign.TestModular1
+import ModularDesign.TestModular1
 -- import ModularDesign.TestModular2
 -- import ModularDesign.Models.Modular1
 -- import ModularDesign.Models.Modular2
