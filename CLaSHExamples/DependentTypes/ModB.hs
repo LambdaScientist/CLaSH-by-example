@@ -17,7 +17,6 @@ baz = 6
 baz2 :: CustomType
 baz2 = baz
 
-asdf
 
 
 topEntity :: a -> (CustomType, Unsigned $( litT $ numTyLit $ toInteger  $ ModA.f ModA.xyz  ))

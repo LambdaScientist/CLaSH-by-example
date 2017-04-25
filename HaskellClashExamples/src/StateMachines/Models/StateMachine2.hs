@@ -55,7 +55,7 @@ onRun st@St{..} pin@PIn{..} IsRising = stateAction
     stateAction :: St
     stateAction | _stateReg == Idle && _go == Go = (setCountTo0.setDoneToDone) st{_stateReg = Active}
                 | _stateReg == Active && _kill == Terminate = (incCount.setDoneToNotDone) st{_stateReg = Finish}
-                | _stateReg == Active && _count == 64 = (incCount.setDoneToNotDone) st{_stateReg = Finish}
+                | _stateReg == Active && _count == 100 = (incCount.setDoneToNotDone) st{_stateReg = Finish}
                 | _stateReg == Active = (incCount.setDoneToNotDone) st
                 | _stateReg == Finish = (setCountTo0.setDoneToDone) st{_stateReg = Idle}
                 | _stateReg == Abort && _kill == Terminate = (setCountTo0.setDoneToNotDone) st{_stateReg = Idle}

@@ -52,7 +52,7 @@ nextState st PIn{_reset = ResetEnabled} _                           = st{_stateR
 nextState st@St{_stateReg = Idle} PIn{_go = Go} IsRising            = st{_stateReg = Active}
 nextState st@St{_stateReg = Idle} _ IsRising                        = st
 nextState st@St{_stateReg = Active} PIn{_kill = Terminate} IsRising = st{_stateReg = Abort}
-nextState st@St{_stateReg = Active, _count = 64} _ IsRising         = st{_stateReg = Finish}
+nextState st@St{_stateReg = Active, _count = 100} _ IsRising         = st{_stateReg = Finish}
 nextState st@St{_stateReg = Finish} _ IsRising                      = st{_stateReg = Idle}
 nextState st _ _                                                    = st
 

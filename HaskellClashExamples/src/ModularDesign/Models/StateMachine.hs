@@ -44,18 +44,18 @@ reset = St Idle 0 False
 onRun :: St -> PIn -> Bool -> St
 onRun st@St{..} PIn{..} risingEdge = flip execState st $ do
   if _reset then put reset
-  else
+  else do
     case _state_reg of
       Idle   -> when _go $ state_reg .= Active
       Active -> if _kill then state_reg .= Abort
-                else when (_count == 64)  $ state_reg .= Finish
+                else when (_count == 100)  $ state_reg .= Finish
       Finish -> state_reg .= Idle
       Abort  -> unless _kill $ state_reg .= Idle
       _  -> state_reg .= Idle
-  when risingEdge $ do
-    if _state_reg == Finish || _state_reg == Abort then count .= 0
-                                                  else when (_state_reg == Active) $ count += 1
-    if _state_reg == Finish then done .= True else done .= False
+    when risingEdge $ do
+      if _state_reg == Finish || _state_reg == Abort then count .= 0
+                                                    else when (_state_reg == Active) $ count += 1
+      if _state_reg == Finish then done .= True else done .= False
 
 topEntity :: Signal PIn -> Signal St
 topEntity = topEntity' st
