@@ -41,7 +41,7 @@ instance Pretty TestResult where
                        $+$ text "initConfig ="
                        <+> (pPrint initConfig
                             $+$ text "endSt =" <+> pPrint endSt)
-instance Show TestResult where 
+instance Show TestResult where
   show = show.pPrint
 -----This will be used if no changes are needed -------------------------------
 runOneTest' :: forall st trans
