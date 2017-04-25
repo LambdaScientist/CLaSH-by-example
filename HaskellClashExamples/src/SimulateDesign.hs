@@ -47,11 +47,11 @@
 
 
 
-import ModularDesign.TestModular1
+-- import ModularDesign.TestModular1
 -- import ModularDesign.Models.Modular1
 
 
--- import ModularDesign.TestModular2
+import ModularDesign.TestModular2
 -- import ModularDesign.Models.Modular2
 
 -- import ModularDesign.Models.StateMachine
