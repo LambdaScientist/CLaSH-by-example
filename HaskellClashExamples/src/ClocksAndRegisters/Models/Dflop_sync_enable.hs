@@ -26,8 +26,8 @@ data ResetStatus   = ResetEnabled | ResetDisabled deriving (Eq, Show)
 data ClearStatus   = ClearEnabled | ClearDisabled deriving (Eq, Show)
 
 --inputs
-data PIn = PIn { _in1    :: Bit
-               , _clk    :: Bit
+data PIn = PIn { _clk    :: Bit
+               , _in1    :: Bit
                , _reset  :: ResetStatus
                , _enable :: ActiveStatus
                , _clearN :: ClearStatus
@@ -39,7 +39,7 @@ data St = St { _out1 :: Bit
              } deriving (Eq, Show)
 makeLenses ''St
 instance NFData St where
-  rnf a = seq a () 
+  rnf a = seq a ()
 
 getSignalStatus :: (Bounded a, Eq a) => a -> Signal a -> Signal SignalStatus
 getSignalStatus value sigValue = status <$> isRising value sigValue
@@ -74,8 +74,8 @@ instance Pretty St where
 instance PortIn PIn
 instance Pretty PIn where
   pPrint PIn {..} = text "PIn:"
-                $+$ text "_in1 ="    <+> showT _in1
                 $+$ text "_clk ="    <+> showT _clk
+                $+$ text "_in1 ="    <+> showT _in1
                 $+$ text "_reset ="  <+> showT _reset
                 $+$ text "_enable =" <+> showT _enable
                 $+$ text "_clearN =" <+> showT _clearN

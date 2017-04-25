@@ -2,7 +2,7 @@
 -- import ClocksAndRegisters.TestClks_n_regs_4
 -- import qualified ClocksAndRegisters.Models.Clks_n_regs_4 as CR
 
-import ClocksAndRegisters.TestDflop_en_clr
+-- import ClocksAndRegisters.TestDflop_en_clr
 -- import ClocksAndRegisters.Models.Dflop_en_clr
 
 -- import ClocksAndRegisters.TestDflop_sync_enable
@@ -28,14 +28,13 @@ import ClocksAndRegisters.TestDflop_en_clr
 
 -- import InAndOut.TestStandardMux1
 -- import InAndOut.Models.StandardMux1
-
 -- import InAndOut.TestStandardMux2
 -- import InAndOut.Models.StandardMux2
 
 -- import StateMachines.TestStateMachine
 -- import StateMachines.Models.StateMachine
 
--- import StateMachines.TestStateMachine2
+import StateMachines.TestStateMachine2
 -- import StateMachines.Models.StateMachine2
 
 -------------- DEAD ------------------------------------------------------------

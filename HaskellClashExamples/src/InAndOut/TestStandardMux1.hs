@@ -21,7 +21,7 @@ configurationList = [configOne, configTwo, configThree, configFour]
   where
     startSt    = St 0
 
-    inputOne   = PIn  0 1 ChooseRight
+    inputOne   = PIn  0 0 ChooseRight
     configOne  = Config inputOne startSt
 
     inputTwo    = PIn 0 1 ChooseLeft

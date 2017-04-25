@@ -20,7 +20,7 @@ import GHC.Generics (Generic)
 configurationList :: [Config]
 configurationList = [configOne, configTwo, configThree, configFour]
   where
-    startSt = St Active 99 NotDone
+    startSt = St Active 100 NotDone
 
     inputOne  = PIn 1 ResetEnabled DontGo DontKill
     configOne = Config inputOne startSt
@@ -31,7 +31,7 @@ configurationList = [configOne, configTwo, configThree, configFour]
     inputThree  = PIn 1 ResetDisabled Go DontKill
     configThree = Config inputThree startSt
 
-    inputFour  = PIn 1 ResetDisabled DontGo DontKill
+    inputFour  = PIn 1 ResetDisabled DontGo Terminate
     configFour = Config inputFour startSt
 
 

@@ -21,8 +21,8 @@ data SignalStatus  = IsRising | NotRising deriving (Eq, Show)
 data ResetStatus   = ResetEnabled | ResetDisabled deriving (Eq, Show)
 
 --inputs
-data PIn = PIn { _in1   :: Bit
-               , _clk   :: Bit
+data PIn = PIn { _clk   :: Bit
+               , _in1   :: Bit
                , _reset :: ResetStatus
                } deriving (Eq, Show)
 instance NFData PIn where
@@ -62,8 +62,8 @@ topEntity' st pin = result
 instance PortIn PIn
 instance Pretty PIn where
   pPrint PIn {..} = text "PIn:"
-                $+$ text "_in1 ="  <+> showT _in1
                 $+$ text "_clk ="   <+> showT _clk
+                $+$ text "_in1 ="  <+> showT _in1
                 $+$ text "_reset =" <+> showT _reset
 
 instance SysState St
