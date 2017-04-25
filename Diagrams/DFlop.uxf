@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.2">
+  <zoom_level>10</zoom_level>
+  <element>
+    <type>com.baselet.element.old.allinone.ActivityDiagramText</type>
+    <coordinates>
+      <x>370</x>
+      <y>190</y>
+      <w>323</w>
+      <h>639</h>
+    </coordinates>
+    <panel_attributes>title:TopEntity'
+
+Start
+Get St in
+Get PIn in
+Check if Clk is rising
+
+Update Result Signal 
+
+Pass into onTrue: \   - St as st \   - PIn as PIn{..}
+
+Pattern match on SignalStatus
+
+If
+	[IsRising]
+	st{ _out1 = input1 }
+		
+	[ Don't Care ]
+	st
+EndIf
+
+End
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>370</x>
+      <y>90</y>
+      <w>320</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>ClocksAndRegisters.Models.SimpleDFlop
+--
+
+- topEntity' :: St -&gt; Signal PIn -&gt; Signal St
+- onTrue :: St -&gt; PIn -&gt; SignalStatus -&gt; St
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
