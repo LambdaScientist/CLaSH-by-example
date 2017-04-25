@@ -20,16 +20,16 @@ configurationList = [configOne, configTwo, configThree, configFour]
   where
     startSt    = St 0
 
-    inputOne  = PIn 1 0 ResetEnabled Disabled ClearDisabled
+    inputOne  = PIn 1 1 ResetEnabled Disabled ClearDisabled
     configOne = Config inputOne startSt
 
-    inputTwo  = PIn 1 1 ResetDisabled Enabled ClearDisabled
+    inputTwo  = PIn 0 1 ResetDisabled Enabled ClearEnabled
     configTwo = Config inputTwo startSt
 
-    inputThree  = PIn 0 1 ResetDisabled Disabled ClearEnabled
+    inputThree  = PIn 1 1 ResetDisabled Enabled ClearDisabled
     configThree = Config inputThree startSt
 
-    inputFour  = PIn 1 0 ResetDisabled Enabled ClearEnabled
+    inputFour  = PIn 1 0 ResetDisabled Disabled ClearEnabled
     configFour = Config inputFour startSt
 
 

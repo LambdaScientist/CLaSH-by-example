@@ -23,8 +23,8 @@ data ResetStatus   = ResetEnabled | ResetDisabled deriving (Eq, Show)
 data ActiveStatus  = Enabled | Disabled deriving (Eq, Show)
 
 --inputs
-data PIn = PIn { _in1    :: Bit
-               , _clk    :: Bit
+data PIn = PIn { _clk    :: Bit
+               , _in1    :: Bit
                , _reset  :: ResetStatus
                , _enable :: ActiveStatus
                , _clearN :: ClearStatus
@@ -40,7 +40,7 @@ instance NFData St where
 onTrue :: St -> PIn -> SignalStatus -> St
 onTrue _ PIn{_reset = ResetEnabled} _ = St 0
 onTrue st PIn{_clearN = ClearDisabled} IsRising = st & out1 .~ 0
-onTrue st PIn{_enable = Disabled, _in1 = input1} IsRising = st & out1 .~ input1
+onTrue st PIn{_enable = Enabled, _in1 = input1} IsRising = st & out1 .~ input1
 onTrue st _ _ = st
 
 getSignalStatus :: (Bounded a, Eq a) => a -> Signal a -> Signal SignalStatus
@@ -65,8 +65,8 @@ topEntity' st pin = result
 
 instance Pretty PIn where
   pPrint PIn {..} = text "PIn:"
-                $+$ text "_in1 ="    <+> showT _in1
                 $+$ text "_clk ="    <+> showT _clk
+                $+$ text "_in1 ="    <+> showT _in1
                 $+$ text "_reset ="  <+> showT _reset
                 $+$ text "_enable =" <+> showT _enable
                 $+$ text "_clearN =" <+> showT _clearN

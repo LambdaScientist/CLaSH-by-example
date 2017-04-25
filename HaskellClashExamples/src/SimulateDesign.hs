@@ -2,7 +2,7 @@
 -- import ClocksAndRegisters.TestClks_n_regs_4
 -- import qualified ClocksAndRegisters.Models.Clks_n_regs_4 as CR
 
--- import ClocksAndRegisters.TestDflop_en_clr
+import ClocksAndRegisters.TestDflop_en_clr
 -- import ClocksAndRegisters.Models.Dflop_en_clr
 
 -- import ClocksAndRegisters.TestDflop_sync_enable
@@ -48,7 +48,7 @@
 
 
 
-import ModularDesign.TestModular1
+-- import ModularDesign.TestModular1
 -- import ModularDesign.Models.Modular1
 
 

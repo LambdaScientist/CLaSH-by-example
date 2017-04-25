@@ -17,8 +17,8 @@ import SAFE.TestingTools
 import SAFE.CommonClash
 
 --inputs
-data PIn = PIn { _in1    :: Bit
-               , _clk     :: Bit
+data PIn = PIn { _clk    :: Bit
+               , _in1     :: Bit
                , _reset   :: Bool
                , _enable  :: Bool
                , _clearN :: Bool
@@ -31,7 +31,7 @@ data St = St { _out1 :: Bit
 makeLenses ''St
 instance NFData St where
   rnf a = seq a ()
-  
+
 onTrue :: St -> PIn -> Bool -> St
 onTrue st PIn{..} rEdge = ifReset
   where
@@ -68,8 +68,8 @@ instance Pretty St where
 instance PortIn PIn
 instance Pretty PIn where
   pPrint PIn {..} = text "PIn:"
-                $+$ text "_in1 ="    <+> showT _in1
                 $+$ text "_clk ="    <+> showT _clk
+                $+$ text "_in1 ="    <+> showT _in1
                 $+$ text "_reset ="  <+> showT _reset
                 $+$ text "_enable =" <+> showT _enable
                 $+$ text "_clearN ="  <+> showT _clearN

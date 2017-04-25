@@ -20,16 +20,16 @@ configurationList = [configOne, configTwo, configThree, configFour]
   where
     startSt    = St 0
 
-    inputOne  = PIn 1 0 True False False
+    inputOne  = PIn 1 1 True False False
     configOne = Config inputOne startSt
 
-    inputTwo  = PIn 1 1 False True False
+    inputTwo  = PIn 0 1 False True True
     configTwo = Config inputTwo startSt
 
-    inputThree  = PIn 0 1 False False True
+    inputThree  = PIn 1 1 False True False
     configThree = Config inputThree startSt
 
-    inputFour  = PIn 1 0 False True True
+    inputFour  = PIn 1 0 False False True
     configFour = Config inputFour startSt
 
 
