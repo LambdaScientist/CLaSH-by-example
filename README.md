@@ -1,5 +1,5 @@
 # CLaSH-by-example
-This project is a collection of CLaSH examples.
+This project is a collection of CLaSH examples. Code base is an expirment in diffrent ways to wirte Haskell for FPGAs
 
 Including :
 - A conversion of source code from VHDL BY EXAMPLE by Blaine C. Readler
